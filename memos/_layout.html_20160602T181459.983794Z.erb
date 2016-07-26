@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+  <title></title>
+  <meta name="generator" content="thinktank" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript"/>
+	<meta http-equiv="Content-Style-Type" content="text/css"/>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link href="style/thinktank.css" type="text/css" rel="stylesheet" />
+	<link href="bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="../bootstrap/js/bootstrap.js"></script>
+</head>
+<body>
+
+	<div class="input-group" style="width:80%">
+		<span class="input-group-btn">
+			<button id="close"   class="btn btn-default" onClick="ttclose()" >  <i class="glyphicon glyphicon-remove"></i></button>
+			<button id="home"    class="btn btn-default" onClick="tthome()" >   <i class="glyphicon glyphicon-home"></i></button>
+			<%%- if [:edit, :editlist].find( req.action_tag ) then -%> 
+			  <button id="tglmode" class="btn btn-default" onClick="tttglmode()" ><i class="glyphicon glyphicon-eye-open"></i></button>
+			<%%- else -%>
+  			<button id="tglmode" class="btn btn-default" onClick="tttglmode()" ><i class="glyphicon glyphicon-pencil"></i></button>
+			<%%- end -%>
+		</span>
+
+		<input type="text" class="form-control" placeholder="索" style="height:30px" id="inpt" >
+			<span class="input-group-btn">
+				<button id="search" class="btn btn-default" onClick="ttsearch()" ><i class="glyphicon glyphicon-search"></i> Find</button>
+				<button id="list"   class="btn btn-default" onClick="ttlist()" >  <i class="glyphicon glyphicon-list"></i> List</button>
+				<button id="update" class="btn btn-default" onClick="ttupdate()" ><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+				<button id="delete" class="btn btn-default" onClick="ttdelete()" ><i class="glyphicon glyphicon-trash"></i> Delete</button>
+				<button id="create" class="btn btn-default" onClick="ttcreate()" ><i class="glyphicon glyphicon-plus"></i> New</button>
+			</span>
+		</input>
+	</div>
+	
+	<div id="editor" class="tt-mainpanel"><%- -%>
+<%= yield -%>
+	</div>
+	<div class="tt-rightpanel"></div>
+	
+  </br>
+
+		
+	<script>
+		function ttclose(e){   window.close(); }
+		function tthome(e){    location.href = '<%%= req.url_to(:show, '0000-00-00-000000') -%>'; }
+		function tttglmode(e){ location.href = '<%%= req.url_to(:toggle) -%>'; }
+		// function ttcreate(e){  $.ajax({ url: '<%%= req.url_to(:create) -%>', type: 'POST', success: function(dat){ location.href = '<%%= req.url_to(:memos) -%>/' + dat + '/edit.html'; } }); }
+		function ttcreate(e){  $.ajax({ url: '<%%= req.url_to(:create) -%>', type: 'POST', success: function(dat){ location.href = '<%%= req.url_to(:edit) -%>'.replace('%s', dat); } }); }
+		function ttupdate(e){  $.ajax({ url: '<%%= req.url_to(:update) -%>', type: 'PUT',  data: { content: editor.getValue() }, success: function(e){ location.reload() } }); }
+		function ttdelete(e){  $.ajax({ url: '<%%= req.url_to(:delete) -%>', type: 'DELETE', success: function(e){ window.close() } }); }
+		function ttsearch(e){  alert('constructing:' . e); }
+		function ttlist(e){    location.href = '<%%= req.url_to(:index) -%>'; }
+	</script>
+	
+	<%%- if [:edit, :editlist].find{|i| i == req.action_tag } then -%> 
+	<script src="../ace/ace.js"></script>
+	<script src="../ace/ext-linking.js"></script>
+	<script>
+		var base  = '<%%= req.url_to(:memos) -%>';
+		
+		function howm( id = null, opt = {ext: 'howm'} ){ 
+		  switch(true){
+		    case id == null: return base + '/' + curid + '.' + opt.ext;
+		    case id == ''  : return base + '.' + opt.ext;
+		    default        : return base + '/' + id + '.' + opt.ext;
+		  }
+		}
+	
+		function click(data){
+		  txt = data.token.value
+		  if( /^http/.test( txt ) ) {
+		    window.open( txt, "_blank" );
+		  } else {
+		    window.open( howm(txt.substr(0,17)+"/edit",{ext:'html'}), "_blank" );
+		  }
+		} 
+		
+		// history.pushState(curid, null, howm());
+		
+		var editor = ace.edit("editor");
+		editor.$blockScrolling = Infinity;
+		editor.setTheme("../ace/theme/idle_fingers");
+		editor.getSession().setMode("../ace/mode/thinktank");
+		editor.setKeyboardHandler("../ace/keyboard/emacs");
+		
+		editor.setFontSize(13);
+		editor.getSession().setUseWrapMode(true);
+		editor.getSession().setTabSize(2);
+		editor.renderer.setShowGutter(false);
+		
+		editor.setOptions( { enableLinking: true } );
+		editor.on("linkClick", click );
+		
+		$('#inpt').keydown( function(e){ if( e.which == 13 ){ ttsearch(e); $("#editor").focus(); return false; } });
+		// editor.commands.addCommand({ bindKey: { win: 'Ctrl-E', mac: 'Ctrl-E' }, exec: function(e){ $("#inpt").focus(); } });
+		// editor.commands.addCommand({ bindKey: { win: 'Ctrl-S', mac: 'Ctrl-S' }, exec: function(e){ ttupdate(e); } });
+		// editor.commands.addCommand({ bindKey: { win: 'Ctrl-M', mac: 'Ctrl-M' }, exec: function(e){ ttcreate(e); } });
+		// editor.commands.addCommand({ bindKey: { win: 'Ctrl-Q', mac: 'Ctrl-Q' }, exec: function(e){ ttclose(e); } });
+		
+	</script>
+	<%%- end -%>
+
+</body>
+</html>
+
+      

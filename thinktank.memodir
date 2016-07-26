@@ -1,0 +1,29 @@
+{{ "pcname": "EEEBOX",
+ 	 "memodir": "/home/shin/Dropbox/MyData/tt/" },
+
+ { "pcname": "EGA-MACBOOK-AIR.LOCAL",
+   "memodir": "/Users/gogowooky/Dropbox/MyData/tt/" },
+
+ { "pcname": "EGAMAC",
+   "memodir": "/Users/gogowooky/Dropbox/MyData/tt/" },
+
+ { "pcname": "EGAMAC.LOCAL",
+   "memodir": "/Users/gogowooky/Dropbox/MyData/tt/" },
+
+ { "pcname": "EGASHIRA7-PC",
+   "memodir": "C:/Users/egashira7/Qsync/MyData/tt/" },
+
+ { "pcname": "EGATAB",
+   "memodir": "D:/dropbox/MyData/tt/" },
+
+ { "pcname": "EGAYOME",
+   "memodir": "C:/Users/EGAYOME/Qsync/MyData/tt/" },
+
+ { "pcname": "OCDDBEAN",
+   "memodir":, "/home/ocdd/Dropbox/MyData/tt/" },
+
+ { "pcname": "SERENA-PC2",
+   "memodir": "C:/Users/shin/Dropbox/MyData/tt/" }
+}
+
+

@@ -1,0 +1,828 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ScappleDocument Version="1.1" ID="D589736F-3EEE-4128-90A0-DA0981C4700D">
+    <Notes>
+        <Note ID="75" FontSize="9.0" Position="151.0,120.0" Width="74.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square">0.0 0.0 0.0</Border>
+            </Appearance>
+            <String>ThinktankObject
+:root, :parent</String>
+            <ConnectedNoteIDs>77-78, 80</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,16</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="77" FontSize="9.0" Position="307.0,65.0" Width="119.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square">0.0 0.0 0.0</Border>
+            </Appearance>
+            <String>ThinktankRoot
+:memodir, :configs, :memos
+initialize( memodir: )
+load_conf()
+load_memo()
+memodir( memoid: )</String>
+            <ConnectedNoteIDs>75</ConnectedNoteIDs>
+            <PointsToNoteIDs>75</PointsToNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,13</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="78" FontSize="9.0" Position="334.0,176.0" Width="189.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square">0.0 0.0 0.0</Border>
+            </Appearance>
+            <String>ThinktankMemos
+:size, :values
+[]
+initialize( loadfile:, root:)
+property( address: )
+create( memoid:, options: ) -&gt; String:memoid
+update( memoid:, options: ) -&gt; String:memoid
+delete( memoid:, options: )
+index( memoid:, options: ) -&gt; Hash:memo
+show( memoid:, options: )
+edit( memoid:, options: )
+error( memoid:, options: )
+</String>
+            <ConnectedNoteIDs>75</ConnectedNoteIDs>
+            <PointsToNoteIDs>75</PointsToNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,14</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="80" FontSize="9.0" Position="44.0,210.0" Width="201.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square">0.0 0.0 0.0</Border>
+            </Appearance>
+            <String>ThinktankSection
+:content, :firstline, :star, :subsections, :properties
+initialize( text:, parent:, root: )
+caption()
+text()
+[]( regexp, nth )</String>
+            <ConnectedNoteIDs>75, 81</ConnectedNoteIDs>
+            <PointsToNoteIDs>75</PointsToNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,16</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="81" FontSize="9.0" Position="298.0,352.0" Width="163.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square">0.0 0.0 0.0</Border>
+            </Appearance>
+            <String>ThinktankMemo
+:memoid, :filepath
+initialize( filepath:, parent:, root: )
+property( address: )</String>
+            <ConnectedNoteIDs>80</ConnectedNoteIDs>
+            <PointsToNoteIDs>80</PointsToNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,13</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="82" FontSize="10.0" Position="458.0,72.0" Width="390.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>@tt.configs["0000-00-00-000001"][/Thinktank$/][/Host/][/gogowooky/].properties["port"]
+@tt.configs.properties( “Thinktank.Host.gogowooky:port” )</String>
+        </Note>
+        <Note ID="84" FontSize="8.0" Position="635.0,168.0" Width="60.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="2" Style="Square"></Border>
+            </Appearance>
+            <String>ThinktankRoot</String>
+            <ConnectedNoteIDs>86</ConnectedNoteIDs>
+            <PointsToNoteIDs>86</PointsToNoteIDs>
+        </Note>
+        <Note ID="86" FontSize="8.0" Position="630.0,228.0" Width="69.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="2" Style="Square"></Border>
+            </Appearance>
+            <String>ThinktankMemos</String>
+            <ConnectedNoteIDs>84, 87</ConnectedNoteIDs>
+            <PointsToNoteIDs>87</PointsToNoteIDs>
+        </Note>
+        <Note ID="87" FontSize="8.0" Position="633.0,288.0" Width="65.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="2" Style="Square"></Border>
+            </Appearance>
+            <String>ThinktankMemo</String>
+            <ConnectedNoteIDs>86, 88</ConnectedNoteIDs>
+            <PointsToNoteIDs>88</PointsToNoteIDs>
+        </Note>
+        <Note ID="88" FontSize="8.0" Position="629.0,349.0" Width="70.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="2" Style="Square"></Border>
+            </Appearance>
+            <String>ThinktankSection</String>
+            <ConnectedNoteIDs>87, 90</ConnectedNoteIDs>
+            <PointsToNoteIDs>90</PointsToNoteIDs>
+        </Note>
+        <Note ID="90" FontSize="8.0" Position="629.0,409.0" Width="70.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="2" Style="Square"></Border>
+            </Appearance>
+            <String>ThinktankSection</String>
+            <ConnectedNoteIDs>88</ConnectedNoteIDs>
+        </Note>
+        <Note ID="109" FontSize="9.0" Position="985.0,74.0" Width="189.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square">0.0 0.0 0.0</Border>
+            </Appearance>
+            <String>ThinktankRequest
+:tt_client, :tt_url, :tt_dir, :tt_erb_dir, :tt_erb_file
+:prepared_content, :prepared_content_type
+
+self.agent_regexp()
+self.tturl_regexp()
+self.extended( req )
+
+report_status()
+</String>
+            <ConnectedNoteIDs>110-112</ConnectedNoteIDs>
+            <PointsToNoteIDs>110-112</PointsToNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,16</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="110" FontSize="9.0" Position="874.0,231.0" Width="101.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square">0.0 0.0 0.0</Border>
+            </Appearance>
+            <String>ThinktankRequestStyle
+
+self.regexp()
+self.extended( req )</String>
+            <ConnectedNoteIDs>109</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,21</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="111" FontSize="9.0" Position="962.0,292.0" Width="143.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square">0.0 0.0 0.0</Border>
+            </Appearance>
+            <String>ThinktankRequestMemo
+:memoid, :format_tag, :action_tag
+
+self.regexp()
+self.extended( req )
+report( mes )
+report_status()</String>
+            <ConnectedNoteIDs>109</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,20</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="112" FontSize="9.0" Position="1153.0,304.0" Width="143.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square">0.0 0.0 0.0</Border>
+            </Appearance>
+            <String>ThinktankRequestHtml
+:memoid, :format_tag, :action_tag
+
+self.regexp()
+self.extended( req )
+layout()
+report( mes )
+report_status()
+memos_url()
+howm_url()
+memo_url()
+edit_url()</String>
+            <ConnectedNoteIDs>109</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,20</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="162" FontSize="8.0" Position="186.0,1144.0" Width="43.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Thinktank</String>
+            <ConnectedNoteIDs>163, 174</ConnectedNoteIDs>
+        </Note>
+        <Note ID="163" FontSize="8.0" Position="285.0,1151.0" Width="135.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1"></Border>
+            </Appearance>
+            <String>Nas4Free ( MyJobs )
+Syncthings ( MyData )
+Thinktank server ( Photos@QNAP )</String>
+            <ConnectedNoteIDs>162, 170, 173</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,8</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="165" FontSize="8.0" Position="218.0,1023.0" Width="115.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1"></Border>
+            </Appearance>
+            <String>EgaMac
+Syncthing ( MyJobs, MyData )</String>
+            <ConnectedNoteIDs>170</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,6</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="166" FontSize="8.0" Position="376.0,1250.0" Width="45.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>YOKO-PC</String>
+        </Note>
+        <Note ID="167" FontSize="8.0" Position="297.0,1226.0" Width="68.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1"></Border>
+            </Appearance>
+            <String>QNAP ( Photos )</String>
+            <ConnectedNoteIDs>171-173, 175</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,4</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="168" FontSize="8.0" Position="281.0,1381.0" Width="41.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1"></Border>
+            </Appearance>
+            <String>FreeNAS</String>
+            <ConnectedNoteIDs>171</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,7</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="169" FontSize="8.0" Position="81.0,1213.0" Width="84.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1"></Border>
+            </Appearance>
+            <String>DropBox
+Thinktank File Server</String>
+            <ConnectedNoteIDs>172</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,7</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="170" FontSize="7.0" Position="269.0,1068.0" Width="39.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Syncthing</String>
+            <ConnectedNoteIDs>163, 165</ConnectedNoteIDs>
+        </Note>
+        <Note ID="171" FontSize="7.0" Position="343.0,1296.0" Width="39.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>OK: rsync</String>
+            <ConnectedNoteIDs>167-168</ConnectedNoteIDs>
+        </Note>
+        <Note ID="172" FontSize="8.0" Position="186.0,1217.0" Width="82.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>OK: cloud drive sync</String>
+            <ConnectedNoteIDs>167, 169</ConnectedNoteIDs>
+        </Note>
+        <Note ID="173" FontSize="8.0" Position="334.0,1197.0" Width="33.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>OK: ftp</String>
+            <ConnectedNoteIDs>163, 167</ConnectedNoteIDs>
+        </Note>
+        <Note ID="174" FontSize="8.0" Position="84.0,1130.0" Width="47.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1"></Border>
+            </Appearance>
+            <String>OtherPC
+Memo App</String>
+            <ConnectedNoteIDs>162</ConnectedNoteIDs>
+            <Formatting>
+                <FormatRange Underline="Yes">0,7</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="175" FontSize="7.0" Position="265.0,1294.0" Width="43.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Syncthings</String>
+            <ConnectedNoteIDs>167</ConnectedNoteIDs>
+        </Note>
+        <Note ID="176" FontSize="8.0" Position="267.0,1125.0" Width="122.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Tsukuba: gogowooky.mooo.com</String>
+        </Note>
+        <Note ID="178" FontSize="8.0" Position="241.0,1335.0" Width="158.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Nagaizumi: gogowooky.myqnapcloud.com</String>
+        </Note>
+        <Note ID="235" FontSize="8.0" Position="684.0,1251.0" Width="43.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Style="Square"></Border>
+                <Fill>0.607546 0.607546 0.607546</Fill>
+            </Appearance>
+            <String>Thinktank
+(emacs)</String>
+            <ConnectedNoteIDs>245</ConnectedNoteIDs>
+        </Note>
+        <Note ID="236" FontSize="8.0" Position="747.0,1052.0" Width="166.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Thinktank Server (ruby)</String>
+        </Note>
+        <Note ID="237" FontSize="8.0" Position="681.0,1095.0" Width="43.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Style="Square"></Border>
+                <Fill>0.607546 0.607546 0.607546</Fill>
+            </Appearance>
+            <String>Thinktank
+(browser)</String>
+            <ConnectedNoteIDs>244, 246</ConnectedNoteIDs>
+        </Note>
+        <Note ID="238" FontSize="8.0" Position="1036.0,1181.0" Width="51.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Style="Square"></Border>
+                <Fill>0.974883 0.466769 0.436337</Fill>
+            </Appearance>
+            <String>memos管理
+Read
+Create
+Update
+Delete</String>
+            <ConnectedNoteIDs>241-243</ConnectedNoteIDs>
+        </Note>
+        <Note ID="239" FontSize="8.0" Position="903.0,1060.0" Width="49.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Style="Square"></Border>
+                <Fill>0.974883 0.466769 0.436337</Fill>
+            </Appearance>
+            <String>photos管理
+Read
+( Create )
+( Delete )</String>
+            <ConnectedNoteIDs>240, 243, 246</ConnectedNoteIDs>
+        </Note>
+        <Note ID="240" FontSize="8.0" Position="1175.0,1092.0" Width="62.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Style="Square"></Border>
+                <Fill>0.607546 0.607546 0.607546</Fill>
+            </Appearance>
+            <String>QNAP : photos</String>
+            <ConnectedNoteIDs>239</ConnectedNoteIDs>
+        </Note>
+        <Note ID="241" FontSize="8.0" Position="1168.0,1207.0" Width="73.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Style="Square"></Border>
+                <Fill>0.607546 0.607546 0.607546</Fill>
+            </Appearance>
+            <String>DropBox : memos</String>
+            <ConnectedNoteIDs>238</ConnectedNoteIDs>
+        </Note>
+        <Note ID="242" FontSize="8.0" Position="909.0,1207.0" Width="64.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square"></Border>
+            </Appearance>
+            <String>メモ取り
+index
+show
+update
+create
+delete</String>
+            <ConnectedNoteIDs>238, 244-245</ConnectedNoteIDs>
+        </Note>
+        <Note ID="243" FontSize="8.0" Position="908.0,1132.0" Width="48.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square"></Border>
+            </Appearance>
+            <String>思い出メモ
+一枚
+一覧</String>
+            <ConnectedNoteIDs>238-239, 244</ConnectedNoteIDs>
+        </Note>
+        <Note ID="244" FontSize="8.0" Position="795.0,1148.0" Width="24.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Style="Square"></Border>
+                <Fill>0.531484 0.869336 0.999151</Fill>
+            </Appearance>
+            <String>html</String>
+            <ConnectedNoteIDs>237, 242-243</ConnectedNoteIDs>
+        </Note>
+        <Note ID="245" FontSize="8.0" Position="796.0,1247.0" Width="30.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Style="Square"></Border>
+                <Fill>0.531484 0.869336 0.999151</Fill>
+            </Appearance>
+            <String>howm</String>
+            <ConnectedNoteIDs>235, 242</ConnectedNoteIDs>
+        </Note>
+        <Note ID="246" FontSize="8.0" Position="813.0,1071.0" Width="21.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Style="Square"></Border>
+                <Fill>0.531484 0.869336 0.999151</Fill>
+            </Appearance>
+            <String>img</String>
+            <ConnectedNoteIDs>237, 239</ConnectedNoteIDs>
+        </Note>
+        <Note ID="247" FontSize="8.0" Position="899.0,1399.0" Width="132.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>EXIFで写真を保管(client→QNAP)</String>
+        </Note>
+        <Note ID="248" FontSize="8.0" Position="830.0,1393.0" Width="38.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Optional</String>
+        </Note>
+        <Note ID="249" FontSize="8.0" Position="850.0,1420.0" Width="167.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>ブログtag付メモをブログサイトにExport</String>
+        </Note>
+        <Note ID="250" FontSize="8.0" Position="880.0,1379.0" Width="142.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>memoの頻度調査(HyperEstraier)</String>
+        </Note>
+        <Note ID="251" FontSize="8.0" Position="1510.0,635.0" Width="159.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square"></Border>
+            </Appearance>
+            <String>photoタグ -&gt; html
+[tt:photo:001] : メモ日付の写真
+[tt:photo] : メモ日付の写真一覧
+[tt:photo:xxxx-xx-xx-xxxxxx-xxx] : 特定写真
+[tt:photo:xxxx.jpg] : 特定写真
+[tt:photo:01-01]  [tt:photo:お正月]</String>
+        </Note>
+        <Note ID="252" FontSize="8.0" Position="1365.0,662.0" Width="109.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square"></Border>
+            </Appearance>
+            <String>time-stampタグ
+[xxxx-xx-xx]
+[xxxx-xx-xx ww]
+[xxxx-xx-xx ww hh:mm]
+[xxxx-xx-xx- hh-mm]</String>
+        </Note>
+        <Note ID="253" FontSize="8.0" Position="1331.0,733.0" Width="181.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square"></Border>
+            </Appearance>
+            <String>titleタグ(tt), orgタグ(ot)
+** [tt1][tt2][tt3][time-stamp-tag]   title  :ot1:ot2:ot3:</String>
+        </Note>
+        <Note ID="254" FontSize="8.0" Position="1355.0,771.0" Width="77.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square"></Border>
+            </Appearance>
+            <String>searchタグ
+[tt:search:検索語]
+[tt:tsearch:title検索]</String>
+        </Note>
+        <Note ID="255" FontSize="8.0" Position="1474.0,774.0" Width="132.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square"></Border>
+            </Appearance>
+            <String>memoタグ
+[tt:memo:xxxx-xx-xx-xxxxxx.howm]</String>
+        </Note>
+        <Note ID="256" FontSize="8.0" Position="1454.0,820.0" Width="44.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square"></Border>
+            </Appearance>
+            <String>jumpタグ
+[tt:検索語]
+[tt:1]</String>
+        </Note>
+        <Note ID="257" FontSize="9.0" Position="725.0,586.0" Width="248.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1"></Border>
+            </Appearance>
+            <String>http://host:port/thinktank/memos/xxxx-xx-xx-xxxxxx.html
+http://host:port/thinktank/memos/xxxx-xx-xx-xxxxxx/edit.html
+
+http://host.port/thinktank/memos/xxxx-xx-xx-xxxxxx.howm</String>
+        </Note>
+        <Note ID="258" FontSize="9.0" Position="734.0,652.0" Width="250.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1"></Border>
+            </Appearance>
+            <String>data / view = jpg / html
+http://[host:port]/thinktank/photos/xxxx-xx-xx-xxxxxx-xxx.jpg
+http://[host:port]/thinktank/photos/xxxx-xx-xx/[filename].jpg
+
+html-single
+http://[host:port]/thinktank/photos/xxxx-xx-xx-xxxxxx-xxx.html
+http://[host:port]/thinktank/photos/xxxx-xx-xx/[filename].html
+
+data / view = howm / html
+http://[host:port]/thinktank/photos.html
+http://[host:port]/thinktank/photos/xxxx.html
+http://[host:port]/thinktank/photos/xxxx-xx.html
+http://[host:port]/thinktank/photos/xxxx-xx-xx.html
+http://[host:port]/thinktank/photos/mmm.html
+http://[host:port]/thinktank/photos/xx.html
+http://[host:port]/thinktank/photos/mmmxx.html
+http://[host:port]/thinktank/photos/xx-xx.html
+http://[host:port]/thinktank/photos/www.html
+
+</String>
+            <Formatting>
+                <FormatRange Bold="Yes">0,24</FormatRange>
+                <FormatRange Bold="Yes">150,11</FormatRange>
+                <FormatRange Bold="Yes">288,26</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="259" FontSize="9.0" Position="181.0,676.0" Width="77.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>/memos/[ID].html</String>
+            <ConnectedNoteIDs>276</ConnectedNoteIDs>
+        </Note>
+        <Note ID="260" FontSize="9.0" Position="171.0,753.0" Width="60.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>/memos.html</String>
+            <ConnectedNoteIDs>274</ConnectedNoteIDs>
+        </Note>
+        <Note ID="261" FontSize="9.0" Position="60.0,828.0" Width="77.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>/memos/[ID].html</String>
+            <ConnectedNoteIDs>273</ConnectedNoteIDs>
+        </Note>
+        <Note ID="262" FontSize="9.0" Position="191.0,716.0" Width="60.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>/memos.html</String>
+            <ConnectedNoteIDs>272</ConnectedNoteIDs>
+        </Note>
+        <Note ID="263" FontSize="9.0" Position="60.0,796.0" Width="77.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>/memos/[ID].html</String>
+            <ConnectedNoteIDs>275</ConnectedNoteIDs>
+        </Note>
+        <Note ID="264" FontSize="9.0" Position="171.0,603.0" Width="94.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>/memos/[ID]/edit.html</String>
+            <ConnectedNoteIDs>276</ConnectedNoteIDs>
+        </Note>
+        <Note ID="267" FontSize="9.0" Position="420.0,628.0" Width="84.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>/memos/[ID].howm</String>
+            <ConnectedNoteIDs>276</ConnectedNoteIDs>
+        </Note>
+        <Note ID="268" FontSize="9.0" Position="409.0,742.0" Width="67.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>/memos.howm</String>
+            <ConnectedNoteIDs>274</ConnectedNoteIDs>
+        </Note>
+        <Note ID="269" FontSize="9.0" Position="420.0,681.0" Width="67.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>/memos.howm</String>
+            <ConnectedNoteIDs>272</ConnectedNoteIDs>
+        </Note>
+        <Note ID="270" FontSize="9.0" Position="418.0,821.0" Width="84.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>/memos/[ID].howm</String>
+            <ConnectedNoteIDs>273</ConnectedNoteIDs>
+        </Note>
+        <Note ID="271" FontSize="9.0" Position="418.0,783.0" Width="84.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>/memos/[ID].howm</String>
+            <ConnectedNoteIDs>275</ConnectedNoteIDs>
+        </Note>
+        <Note ID="272" FontSize="12.0" Position="290.0,691.0" Width="45.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>INDEX</String>
+            <ConnectedNoteIDs>262, 269, 277</ConnectedNoteIDs>
+        </Note>
+        <Note ID="273" FontSize="12.0" Position="287.0,826.0" Width="87.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>DELETE/close</String>
+            <ConnectedNoteIDs>261, 270</ConnectedNoteIDs>
+        </Note>
+        <Note ID="274" FontSize="12.0" Position="262.0,748.0" Width="110.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>CREATE/show [ID]</String>
+            <ConnectedNoteIDs>260, 268</ConnectedNoteIDs>
+        </Note>
+        <Note ID="275" FontSize="12.0" Position="284.0,786.0" Width="103.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>UPDATE/reload</String>
+            <ConnectedNoteIDs>263, 271</ConnectedNoteIDs>
+        </Note>
+        <Note ID="276" FontSize="12.0" Position="291.0,631.0" Width="46.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>SHOW</String>
+            <ConnectedNoteIDs>259, 264, 267</ConnectedNoteIDs>
+        </Note>
+        <Note ID="277" FontSize="9.0" Position="180.0,638.0" Width="77.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>/memos/edit.html</String>
+            <ConnectedNoteIDs>272</ConnectedNoteIDs>
+        </Note>
+        <Note ID="279" FontSize="8.0" Position="412.0,598.0" Width="95.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>ThinktankRequestMemo</String>
+            <Formatting>
+                <FormatRange Underline="Yes">0,20</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="281" FontSize="8.0" Position="37.0,581.0" Width="89.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>ThinktankRequestHtml</String>
+            <Formatting>
+                <FormatRange Underline="Yes">0,20</FormatRange>
+            </Formatting>
+        </Note>
+        <Note ID="282" FontSize="12.0" Position="510.0,453.0" Width="200.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>New Note</String>
+        </Note>
+        <Note ID="283" FontSize="12.0" Position="1488.0,1297.0" Width="59.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Powerful </String>
+        </Note>
+        <Note ID="284" FontSize="12.0" Position="1521.0,1367.0" Width="93.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Square"></Border>
+            </Appearance>
+            <String>Container1
+  Rails
+    Imagemagick
+    MeCab
+  Redis
+Container2
+  MyData
+    tt
+  MyJobs
+    Thinktank3
+ 
+</String>
+        </Note>
+    </Notes>
+    <BackgroundShapes>
+        <Shape ID="164" Sticky="No" Position="260.0,1123.0" Width="225.0" Height="157.0">
+            <Appearance>
+                <Border Weight="1"></Border>
+            </Appearance>
+        </Shape>
+        <Shape ID="177" Sticky="No" Position="236.0,1332.0" Width="215.0" Height="91.941963">
+            <Appearance>
+                <Border Weight="1"></Border>
+            </Appearance>
+        </Shape>
+        <Shape ID="233" Sticky="Yes" Position="758.0,1038.0" Width="358.0" Height="291.333344">
+            <Appearance>
+                <Border Weight="1"></Border>
+            </Appearance>
+            <ConnectedNoteIDs>234</ConnectedNoteIDs>
+        </Shape>
+        <Shape ID="234" Sticky="Yes" Position="818.0,1366.0" Width="221.0" Height="80.0">
+            <Appearance>
+                <Border Weight="1"></Border>
+            </Appearance>
+            <ConnectedNoteIDs>233</ConnectedNoteIDs>
+        </Shape>
+        <Shape ID="278" Sticky="No" Position="405.0,591.0" Width="174.0" Height="274.655548">
+            <Appearance>
+                <Border Weight="1"></Border>
+            </Appearance>
+        </Shape>
+        <Shape ID="280" Sticky="No" Position="33.0,574.0" Width="124.415482" Height="292.0">
+            <Appearance>
+                <Border Weight="1"></Border>
+            </Appearance>
+        </Shape>
+    </BackgroundShapes>
+    <AutoFit>75, 77-78, 80, 82, 84, 86-88, 90, 109-112, 162-163, 165-176, 178, 235, 237-241, 243-246, 248, 251, 253-264, 267-274, 276-277, 279, 281, 283-284</AutoFit>
+    <NoteStyles>
+        <Style Name="Blue Bubble" ID="115A1578-221A-4662-8819-CF996F5F0BB3" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.477193 0.557066 0.76433</BorderColor>
+            <FillColor>0.840969 0.866828 0.925903</FillColor>
+        </Style>
+        <Style Name="Brown Bubble" ID="B411A86C-95C1-4C89-899E-46F2BDA6360B" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.290055 0.1523 0.182215</BorderColor>
+            <FillColor>0.940019 0.892907 0.779716</FillColor>
+        </Style>
+        <Style Name="Green Bubble" ID="B435014A-BD4A-4E48-96D7-AB7731E2E420" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.331867 0.609932 0.356197</BorderColor>
+            <FillColor>0.790123 0.882328 0.80198</FillColor>
+        </Style>
+        <Style Name="Pink Bubble" ID="E68CC2A2-5015-4F67-94E9-C09408E0D966" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.747881 0.366532 0.542813</BorderColor>
+            <FillColor>0.918452 0.807302 0.863467</FillColor>
+        </Style>
+        <Style Name="Red Text" ID="4CC12FA1-9865-4F68-A171-14F3ACDCBCE2" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="Yes" AffectNoteBody="No" AffectFade="No">
+            <TextColor>1.0 0.0 0.0</TextColor>
+        </Style>
+        <Style Name="Title Text" ID="91EC0178-03D4-422C-A813-EBDA7A43F0A3" AffectFontStyle="Yes" AffectAlignment="Yes" AffectTextColor="No" AffectNoteBody="No" AffectFade="No">
+            <FontSize>28.0</FontSize>
+            <IsBold>Yes</IsBold>
+        </Style>
+        <Style Name="Yellow Bubble" ID="FDF45B4C-37DC-4C2C-8365-C6ED4AE4AB41" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.756763 0.785592 0.373258</BorderColor>
+            <FillColor>0.906773 0.910625 0.634363</FillColor>
+        </Style>
+    </NoteStyles>
+    <UISettings>
+        <BackgroundColor>0.999737 0.986332 0.931298</BackgroundColor>
+        <DefaultFont>Helvetica</DefaultFont>
+    </UISettings>
+    <PrintSettings PaperSize="595.275557,841.861389" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="iso-a4" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
+</ScappleDocument>

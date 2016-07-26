@@ -1,0 +1,6 @@
+<%- memos = @thinktank.memos.index( options: req.query ) -%>
+<%- memos.each{|memo| -%>
+<%= memo.memoid -%>.howm | <%= memo.firstline %>
+<%- }  -%>
+
+

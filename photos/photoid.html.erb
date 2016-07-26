@@ -1,0 +1,71 @@
+<%- @thinktank.memos.index( req.memoid, req.query ) -%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link href="style/thinktank.css" type="text/css" rel="stylesheet" />
+	<link href="bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="thinktank" />
+  <title>Entry# <%= @thinktank.memos.size -%></title>
+</head>
+<body>
+
+	<div class="input-group" style="width: 800px">
+		<input type="text" class="form-control" placeholder="全文検索" style="height:38px">
+			<span class="input-group-btn">
+				<button class="btn btn-default dropdown-toggle" type="button" id="search-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					<i class="glyphicon glyphicon-list"></i><span class="caret"></span></button>
+				<ul class="dropdown-menu" aria-labelledby="search-menu">
+					<li><a href="#" data-size1="10">作成順</a></li>
+					<li><a href="#" data-size1="12">更新順</a></li>
+					<li><a href="#" data-size1="14">検索</a></li>
+				</ul>
+
+				<button id="list" class="btn btn-default"><i class="glyphicon glyphicon-list"></i></button>
+				<button id="show" class="btn btn-default"><i class="glyphicon glyphicon-cloud-download"></i></button>
+				<button id="edit" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i></button>
+				<button id="dele" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i></button>
+				<button id="crea" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i></button>
+				
+				<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" ><i class="glyphicon glyphicon-font"></i><span class="caret"></span></button>
+				<ul class="dropdown-menu" id="font-size">
+					<li><a href="#" data-size="10">小さい</a></li>
+					<li><a href="#" data-size="12">普通</a></li>
+					<li><a href="#" data-size="14">大きい</a></li>
+				</ul>
+			</span>
+		</div>
+
+	<!--
+			pagination: per_page(:50),	page(:1)
+			search:     search(:body), q, regex, 
+			sort:       sort_item(:memoid), sort_dir(:ascend)
+		-->
+
+
+	<div id="editor" style="height:500px;"><%- -%>
+		<%- @thinktank.memos.values[-50..-1].reverse.each{|memo| -%>
+		<a href='<%= req.memo_url(memo.memoid) -%>' target='_blank'> <%= memo.memoid -%> .howm</a>
+		<%= memo.firstline -%></BR>
+	  <%- }  -%>
+	</div>
+
+	<script src="bootstrap/js/bootstrap.js"></script>
+	<script src="ace/ace.js"></script>
+	
+	<script>
+		$('#font-size').click(function(e) { $('#editor').css( 'fontSize', $(e.target).data('size') ); });
+		$('#list').click(function(e) { location.href = '<%= req.memos_url -%>'; });
+		$('#show').click(function(e) { location.reload(); });
+		$('#edit').click(function(e) { location.href = '<%= req.edit_url -%>'; });
+		$('#dele').click(function(e) { $.ajax({ url: '<%= req.memo_url -%>',  type: 'DELETE', success: function(dat){ alert('delete'); } }); });
+		$('#crea').click(function(e) { $.ajax({ url: '<%= req.memos_url -%>', type: 'POST',   success: function(dat,sta){ alert(dat); location.href = dat; } }); });
+</script>
+
+
+</body>
+</html>
+

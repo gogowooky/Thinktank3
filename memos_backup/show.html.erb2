@@ -1,0 +1,109 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="thinktank" />
+  <title><%= memo.header -%></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../style/thinktank.css" type="text/css" />
+
+	<!-- BootstrapのCSS読み込み -->
+	<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<!-- jQuery読み込み -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- BootstrapのJS読み込み -->
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+	
+	<div class="input-group" style="width: 800px">
+		<input type="text" class="form-control" placeholder="全文検索" style="height:38px">
+			<span class="input-group-btn">
+				<button id="tsch" class="btn btn-default" style="height:38px"><i class="glyphicon glyphicon-list"></i></button>
+				<button id="bold" class="btn btn-default" style="height:38px"><i class="glyphicon glyphicon-bold"></i></button>
+				<button id="save" class="btn btn-default" style="height:38px"><i class="glyphicon glyphicon-floppy-save"></i></button>
+				<button id="load" class="btn btn-default" style="height:38px"><i class="glyphicon glyphicon-folder-open"></i></button>
+				
+				<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="height:38px"><i class="glyphicon glyphicon-font"></i><span class="caret"></span></button>
+				<ul class="dropdown-menu" id="font-size">
+					<li><a href="#" data-size="10">小さい</a></li>
+					<li><a href="#" data-size="12">普通</a></li>
+					<li><a href="#" data-size="14">大きい</a></li>
+				</ul>
+			</span>
+		</div>
+		
+		1<div id="editor2">[[E D I T O R]]</div>2
+		
+		<div id="editor" style="height: 600px; width: 800px"
+				 ><%- memo.content.split("\n").each{|para| -%>
+			<%- para.gsub!( /\[\[ttimage:([0-9\-\.]+jpg)\]\]/ ){|m| "<img src='http://#{req.host}:#{req.port}/photo/#{$1}' width='30%'>" } -%>
+			<%- para.gsub!( /([0-9]{4}\-[0-9]{2}\-[0-9]{2}\-[0-9]{6})\.howm/ ){|m| "<a href='http://#{req.host}:#{req.port}/thinktank/memos/#{$1}.html'>#{$1}.howm</a>" } -%>
+			<%- para.gsub!( /\[\[(https?:[^\]\[]+)\](\[([^\]\[]*)\])?\]/ ){|m| "<a href='#{$1}'>#{$3||$1}</a>" } 
+					-%><%= para -%></br>
+		<%- } -%>
+	</div>
+	
+</br>
+<a href='https://stackedit.io/viewer#!url=http://gogowooky.myqnapcloud.com:20090/thinktank/memos/<%=memo.id %>.howm'><%= memo.id %>.howm</a>
+</br>
+
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+<!-- <script src="http:/127.0.0.1:20090/thinktank/style/ace/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script> -->
+<!-- Now subdirectoyr in style dir is being hidden, -->
+<!-- http://qiita.com/naga3/items/1bc268243f2e8a6514e5 -->
+
+<script>
+  var editor2 = ace.edit("editor2");
+  editor2.$blockScrolling = Infinity;
+  editor2.setTheme("ace/theme/monokai");
+  editor2.getSession().setMode("ace/mode/html");
+	editor2.insert( '1', 'egashira' );
+  <!-- $.ajax({ type: 'GET',
+       url: 'http://192.168.11.100:20090/thinktank/memos/0000-00-00-000000.howm',
+       dataType: 'text'
+       }).responseText ); -->
+	
+	
+	
+  var editor = ace.edit("editor");
+  editor.$blockScrolling = Infinity;
+  editor.setTheme("ace/theme/monokai");
+  editor.getSession().setMode("ace/mode/html");
+	
+  // editor.setTheme("ace/theme/terminal");
+  editor.setFontSize(11);
+  // editor.getSession().setMode("ace/mode/text");
+  editor.getSession().setUseWrapMode(true);
+  editor.getSession().setTabSize(2);
+
+  $('#font-size').click(function(e) {
+  editor.setFontSize($(e.target).data('size'));
+  });
+  $('#tsch').click(function(e) {
+  alert("全文検索");
+  });
+  $('#bold').click(function(e) {
+  editor.insert('<strong>' + editor.getCopyText() + '</strong>');
+  });
+  $('#save').click(function(e) {
+  localStorage.text = editor.getValue();
+  alert("保存しました。");
+  });
+  $('#load').click(function(e) {
+  if (!confirm("読み込みますか？")) return;
+  editor.setValue(localStorage.text, -1);
+  });
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ScappleDocument Version="1.1" ID="FC5185E5-A374-423C-A6B3-05C7F2B87458">
+    <Notes>
+        <Note ID="1" FontSize="12.0" Position="879.0,91.0" Width="370.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Cloud"></Border>
+            </Appearance>
+            <String>目的：メモを見ながら陽子が環境再構築できるようにする：🔵
+道具と方法：
+元データ：　Dropboxに保存した、MyData, MyJobs
+構築用データ：　GitHubに保存したDockerfiles
+構築先：　NAS</String>
+            <ConnectedNoteIDs>2</ConnectedNoteIDs>
+        </Note>
+        <Note ID="2" FontSize="12.0" Position="695.917969,397.726562" Width="132.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1"></Border>
+            </Appearance>
+            <String>Thinktankプロジェクト</String>
+            <ConnectedNoteIDs>1, 4-7, 30</ConnectedNoteIDs>
+        </Note>
+        <Note ID="4" FontSize="12.0" Position="339.0,97.0" Width="164.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Cloud"></Border>
+            </Appearance>
+            <String>目的：メモをとる：🔴🔴🔴
+Emacs Clientの実装 
+道具と方法：
+言語：　emacs lisp
+</String>
+            <ConnectedNoteIDs>2</ConnectedNoteIDs>
+        </Note>
+        <Note ID="5" FontSize="12.0" Position="976.0,454.0" Width="252.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Cloud"></Border>
+            </Appearance>
+            <String>目的：写真とコメントを一緒に表示する：🔴
+Web View Clientの実装
+道具と方法：
+言語：　javascript</String>
+            <ConnectedNoteIDs>2</ConnectedNoteIDs>
+        </Note>
+        <Note ID="6" FontSize="12.0" Position="686.0,709.0" Width="209.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Cloud"></Border>
+            </Appearance>
+            <String>目的：会社でもThinktankしたい：🔴
+Web Edit Client の実装
+道具と方法：
+言語：　javascript
+構築用ライブラリ：　ace
+</String>
+            <ConnectedNoteIDs>2</ConnectedNoteIDs>
+        </Note>
+        <Note ID="7" FontSize="12.0" Position="308.0,391.0" Width="248.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Cloud"></Border>
+            </Appearance>
+            <String>目的：Emacs用データサーバーを立てる：🔴🔴
+Web Serviceの実装
+道具と方法：
+言語：　Ruby
+構築用ライブラリ：　Rails</String>
+            <ConnectedNoteIDs>2</ConnectedNoteIDs>
+        </Note>
+        <Note ID="9" FontSize="12.0" Position="1082.988281,592.546875" Width="55.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>アルバム</String>
+        </Note>
+        <Note ID="19" FontSize="12.0" Position="679.980469,118.839844" Width="111.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>TabletPC
+Mac / SERENE-PC
+QNAP
+Nas4Free
+陽子PC
+外部PC
+iPhone</String>
+        </Note>
+        <Note ID="24" FontSize="12.0" Position="310.808594,536.609375" Width="80.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>テキスト解析</String>
+        </Note>
+        <Note ID="25" FontSize="12.0" Position="183.0,140.0" Width="63.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>dropmenu</String>
+        </Note>
+        <Note ID="26" FontSize="12.0" Position="190.0,176.0" Width="35.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>helm</String>
+        </Note>
+        <Note ID="27" FontSize="12.0" Position="191.0,206.0" Width="26.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>org</String>
+        </Note>
+        <Note ID="28" FontSize="12.0" Position="183.816406,101.0" Width="36.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>calfw</String>
+        </Note>
+        <Note ID="29" FontSize="12.0" Position="182.0,71.0" Width="51.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>mozrepl</String>
+        </Note>
+        <Note ID="30" FontSize="12.0" Position="523.867188,628.539062" Width="70.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Cloud"></Border>
+            </Appearance>
+            <String>iPhone連携</String>
+            <ConnectedNoteIDs>2, 32-33</ConnectedNoteIDs>
+        </Note>
+        <Note ID="32" FontSize="12.0" Position="242.804688,839.058594" Width="118.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Cloud"></Border>
+            </Appearance>
+            <String>Informant / Toodledo
+TODO  /  Dchedule
+GTD</String>
+            <ConnectedNoteIDs>30</ConnectedNoteIDs>
+        </Note>
+        <Note ID="33" FontSize="12.0" Position="292.554688,719.035156" Width="45.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+                <Border Weight="1" Style="Cloud"></Border>
+            </Appearance>
+            <String>Pocket
+RSS</String>
+            <ConnectedNoteIDs>30</ConnectedNoteIDs>
+        </Note>
+        <Note ID="36" FontSize="12.0" Position="30.398438,295.285156" Width="182.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>ThinkTankテキストデータモデル
+
+日付関連データ
+
+テキスト構造化
+
+タグ
+
+プロパティ
+
+システムコンフィグレーション
+
+
+
+</String>
+        </Note>
+        <Note ID="37" FontSize="12.0" Position="1026.050781,413.484375" Width="192.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>写真を撮影日で分類する。　D&amp;D</String>
+        </Note>
+    </Notes>
+    <BackgroundShapes></BackgroundShapes>
+    <AutoFit>2, 4-6, 9, 19, 24-30, 32-33, 36</AutoFit>
+    <NoteStyles>
+        <Style Name="Title Text" ID="20CD6559-E77A-4DFA-9D72-721E289ACE80" AffectFontStyle="Yes" AffectAlignment="Yes" AffectTextColor="No" AffectNoteBody="No" AffectFade="No">
+            <FontSize>28.0</FontSize>
+            <IsBold>Yes</IsBold>
+        </Style>
+        <Style Name="Red Text" ID="F192C627-546F-49D5-A521-19971A2DA67D" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="Yes" AffectNoteBody="No" AffectFade="No">
+            <TextColor>1.0 0.0 0.0</TextColor>
+        </Style>
+        <Style Name="Brown Bubble" ID="AA500CCF-B806-4A7F-855C-770C64DC9164" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.290055 0.1523 0.182215</BorderColor>
+            <FillColor>0.940019 0.892907 0.779716</FillColor>
+        </Style>
+        <Style Name="Yellow Bubble" ID="19DD69F4-8D24-4A8C-8BD9-09EC7E614002" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.756763 0.785592 0.373258</BorderColor>
+            <FillColor>0.906773 0.910625 0.634363</FillColor>
+        </Style>
+        <Style Name="Green Bubble" ID="D1124F91-C91C-4244-B638-832C9C754331" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.331867 0.609932 0.356197</BorderColor>
+            <FillColor>0.790123 0.882328 0.80198</FillColor>
+        </Style>
+        <Style Name="Blue Bubble" ID="9CD7C258-9715-4CE9-BFA5-E91A2E6A1709" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.477193 0.557066 0.76433</BorderColor>
+            <FillColor>0.840969 0.866828 0.925903</FillColor>
+        </Style>
+        <Style Name="Pink Bubble" ID="77A36FD8-E1B9-47F0-8066-187B09A96551" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
+            <BorderThickness>1</BorderThickness>
+            <BorderColor>0.747881 0.366532 0.542813</BorderColor>
+            <FillColor>0.918452 0.807302 0.863467</FillColor>
+        </Style>
+    </NoteStyles>
+    <UISettings>
+        <BackgroundColor>0.999737 0.986332 0.931298</BackgroundColor>
+        <DefaultFont>Helvetica</DefaultFont>
+        <DefaultTextColor>0.0 0.0 0.0</DefaultTextColor>
+    </UISettings>
+    <PrintSettings PaperSize="595.0,842.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="iso-a4" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
+</ScappleDocument>
