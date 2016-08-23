@@ -23,11 +23,10 @@ class ThinktankRoot < ThinktankObject
   attr_reader :memodir   # メモ保存用フォルダ
   attr_reader :configs   # 設定用メモ
   attr_reader :memos     # メモ
-  attr_reader :app_timestamp  # プログラム更新
 
-  def initialize( memodir: )
-    @memodir = memodir  
-    @update = Dir::glob( File.dirname(__FILE__) + "**/*" ).map{|filename| File.mtime( filename ) }.max.strftime("%Y-%m-%d-%H%M%S")
+  def initialize()
+    @setup = ThinktankMemo.new( filepath: File.expand_path( File.dirname( __FILE__ ) ) + '/thinktank.howm', parent: self, root: self )
+    @memodir = @setup.property( address: "config:memodir" )
   end
   def load_config() @configs = ThinktankMemos.new( loadfile: "#{@memodir}????-??-??-??????/0000-00-00-00000?.howm", root: self )  end
   def load_memo()   @memos   = ThinktankMemos.new( loadfile: "#{@memodir}**/????-??-??-??????/????-??-??-??????.howm", root: self )  end

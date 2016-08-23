@@ -26,13 +26,12 @@ $memodir, $test = nil, "thinktank"
 eval( "$#{$1} = ARGV.shift" ) while ARGV.shift =~ /^\-\-(\w+)/
 
 puts "CMDLINE.OPT>> test     | #{$test}"
-puts "CMDLINE.OPT>> memodir  | #{$memodir}"
 puts "CMDLINE.ENV>> hostname | #{Socket.gethostname}"
 
 case $test
 
 when "run"
-  app_startup( $memodir )
+  app_startup()
 
 when "ttbm"
   Benchmark.bm 10 do |r|

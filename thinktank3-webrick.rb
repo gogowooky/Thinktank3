@@ -38,13 +38,13 @@ def memodir_setup()
   @memodir
 end
 
-def app_startup ( memodir )
+def app_startup ()
 
   ### ----------------------------------------------------------------------------------------------------------
   ### @thinktank : 初期設定
   ### ----------------------------------------------------------------------------------------------------------
 
-  @thinktank = ThinktankRoot.new( memodir: memodir )
+  @thinktank = ThinktankRoot.new()
   @thinktank.load_config
 
   port     = @thinktank.configs.property( address: "config.localserver:port" )
