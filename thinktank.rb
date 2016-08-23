@@ -30,6 +30,7 @@ puts "CMDLINE.OPT>> memodir  | #{$memodir}"
 puts "CMDLINE.ENV>> hostname | #{Socket.gethostname}"
 
 case $test
+
 when "run"
   app_startup( $memodir )
 

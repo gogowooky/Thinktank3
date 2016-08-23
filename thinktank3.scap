@@ -750,6 +750,109 @@ Container2
  
 </String>
         </Note>
+        <Note ID="289" FontSize="8.0" Position="141.928267,1650.161222" Width="169.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>つくば
+QNAP2:  gogowooky.myqnapcloud.com:8080</String>
+        </Note>
+        <Note ID="291" FontSize="8.0" Position="499.356534,1648.326705" Width="181.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>長泉
+QNAP4:  pocopocoyoko.myqnapcloud.com:8080</String>
+        </Note>
+        <Note ID="293" FontSize="12.0" Position="234.928267,1693.426136" Width="80.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>RTRR Server</String>
+            <ConnectedNoteIDs>294, 311</ConnectedNoteIDs>
+            <PointsToNoteIDs>311</PointsToNoteIDs>
+        </Note>
+        <Note ID="294" FontSize="12.0" Position="518.49929,1694.764915" Width="76.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>RTRR Client</String>
+            <ConnectedNoteIDs>293, 310</ConnectedNoteIDs>
+        </Note>
+        <Note ID="296" FontSize="8.0" Position="703.966619,1942.84233" Width="47.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Dropbox</String>
+            <ConnectedNoteIDs>305</ConnectedNoteIDs>
+        </Note>
+        <Note ID="299" FontSize="8.0" Position="559.189631,1942.180398" Width="59.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>GoogleDrive</String>
+            <ConnectedNoteIDs>305</ConnectedNoteIDs>
+        </Note>
+        <Note ID="305" FontSize="12.0" Position="587.84304,1832.258523" Width="101.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Cloud Drive Sync</String>
+            <ConnectedNoteIDs>296, 299, 310</ConnectedNoteIDs>
+            <PointsToNoteIDs>310</PointsToNoteIDs>
+        </Note>
+        <Note ID="306" FontSize="12.0" Position="502.0,1842.910511" Width="65.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Cloud Link</String>
+            <ConnectedNoteIDs>309</ConnectedNoteIDs>
+        </Note>
+        <Note ID="307" FontSize="12.0" Position="258.142756,1840.754972" Width="65.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>Cloud Link</String>
+            <ConnectedNoteIDs>309</ConnectedNoteIDs>
+        </Note>
+        <Note ID="309" FontSize="8.0" Position="374.149148,1935.926136" Width="74.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>myqnapcloud.com</String>
+            <ConnectedNoteIDs>306-307</ConnectedNoteIDs>
+        </Note>
+        <Note ID="310" FontSize="12.0" Position="570.367188,1759.59517" Width="60.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>3TB HDD</String>
+            <ConnectedNoteIDs>294, 305, 316, 318</ConnectedNoteIDs>
+            <PointsToNoteIDs>294</PointsToNoteIDs>
+        </Note>
+        <Note ID="311" FontSize="12.0" Position="184.0,1755.098011" Width="84.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>3TB HDD (x2)</String>
+            <ConnectedNoteIDs>293</ConnectedNoteIDs>
+        </Note>
+        <Note ID="316" FontSize="8.0" Position="764.0,1724.0" Width="45.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>YOKO-PC</String>
+            <ConnectedNoteIDs>310</ConnectedNoteIDs>
+            <PointsToNoteIDs>310</PointsToNoteIDs>
+        </Note>
+        <Note ID="318" FontSize="8.0" Position="764.0,1787.0" Width="60.0">
+            <Appearance>
+                <Alignment>Left</Alignment>
+            </Appearance>
+            <String>SERENA-PC2</String>
+            <ConnectedNoteIDs>310</ConnectedNoteIDs>
+            <PointsToNoteIDs>310</PointsToNoteIDs>
+        </Note>
     </Notes>
     <BackgroundShapes>
         <Shape ID="164" Sticky="No" Position="260.0,1123.0" Width="225.0" Height="157.0">
@@ -784,8 +887,43 @@ Container2
                 <Border Weight="1"></Border>
             </Appearance>
         </Shape>
+        <Shape ID="287" Sticky="Yes" Position="135.0,1641.261364" Width="200.0" Height="242.738636">
+            <Appearance>
+                <Border Weight="1"></Border>
+            </Appearance>
+        </Shape>
+        <Shape ID="290" Sticky="Yes" Position="490.816051,1639.96804" Width="213.0" Height="240.03196">
+            <Appearance>
+                <Border Weight="1"></Border>
+            </Appearance>
+        </Shape>
+        <Shape ID="295" Sticky="Yes" Position="694.40625,1933.456676" Width="105.0" Height="39.0">
+            <Appearance>
+                <Border Weight="1"></Border>
+            </Appearance>
+        </Shape>
+        <Shape ID="298" Sticky="Yes" Position="549.946733,1932.741477" Width="105.0" Height="36.43892">
+            <Appearance>
+                <Border Weight="1"></Border>
+            </Appearance>
+        </Shape>
+        <Shape ID="308" Sticky="Yes" Position="350.053267,1928.926136" Width="127.0" Height="36.0">
+            <Appearance>
+                <Border Weight="1"></Border>
+            </Appearance>
+        </Shape>
+        <Shape ID="315" Sticky="Yes" Position="754.850852,1714.847301" Width="105.0" Height="39.0">
+            <Appearance>
+                <Border Weight="1"></Border>
+            </Appearance>
+        </Shape>
+        <Shape ID="317" Sticky="Yes" Position="755.341619,1777.465199" Width="105.0" Height="39.0">
+            <Appearance>
+                <Border Weight="1"></Border>
+            </Appearance>
+        </Shape>
     </BackgroundShapes>
-    <AutoFit>75, 77-78, 80, 82, 84, 86-88, 90, 109-112, 162-163, 165-176, 178, 235, 237-241, 243-246, 248, 251, 253-264, 267-274, 276-277, 279, 281, 283-284</AutoFit>
+    <AutoFit>75, 77-78, 80, 82, 84, 86-88, 90, 109-112, 162-163, 165-176, 178, 235, 237-241, 243-246, 248, 251, 253-264, 267-274, 276-277, 279, 281, 283-284, 289, 291, 293-294, 305-307, 310-311, 316, 318</AutoFit>
     <NoteStyles>
         <Style Name="Blue Bubble" ID="115A1578-221A-4662-8819-CF996F5F0BB3" AffectFontStyle="No" AffectAlignment="No" AffectTextColor="No" AffectNoteBody="Yes" AffectFade="No">
             <BorderThickness>1</BorderThickness>
