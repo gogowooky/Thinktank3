@@ -1,0 +1,2 @@
+<%- memo = @thinktank.memos.edit( memoid: req.memoid, options: req.query ) -%>
+<%= memo.content -%>

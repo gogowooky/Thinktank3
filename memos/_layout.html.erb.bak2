@@ -6,8 +6,8 @@
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="../lib/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet">
-    <link href="../lib/style/thinktank.css" type="text/css" rel="stylesheet" >
+    <link href="../bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet">
+    <link href="../style/thinktank.css" rel="stylesheet" type="text/css">
   </head><body data-spy="scroll">
     <div class="navbar navbar-default navbar-static-bottom">
       <div class="container">
@@ -43,11 +43,11 @@
     </div>
     <div class="section">
       <div class="container">
-        <div class="row" style="height:98%">
+        <div class="row">
           <div class="col-md-2">
             <div class="row">
-              <div class="col-md-12 text-center">
-                <div class="btn-group btn-group-sm">
+              <div class="col-md-12 text-center form-group">
+                <div class="btn-group">
                   <a class="btn btn-link dropdown-toggle" data-toggle="dropdown">Collection &nbsp;<span class="fa fa-caret-down"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li>
@@ -60,12 +60,14 @@
                 </div>
               </div>
             </div>
-            <div>0000-00-00-000000.howm</div>
+						<div>
+							0000-00-00-000000.howm
+							</div>
           </div>
           <div class="col-md-8">
             <div class="row">
               <div class="col-md-6 text-left">
-                <div class="btn-group btn-group-sm">
+                <div class="btn-group">
                   <a class="btn btn-link dropdown-toggle" data-toggle="dropdown"> Dropdown <span class="fa fa-caret-down"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li>
@@ -73,21 +75,26 @@
                     </li>
                   </ul>
                 </div>
-                <a class="btn btn-link btn-sm">Click me</a>
-                <a class="active btn btn-link btn-sm">Click me</a>
+                <a class="btn btn-link">Click me</a>
+                <a class="btn btn-link">Click me</a>
               </div>
-              <form class="form-horizontal" role="form">
-                <div class="col-sm-6">
-                  <input class="form-control" id="inputEmail3" placeholder="command" style="height:22pt" type="text">
+              <div class="col-md-6 form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="command">
+                  <span class="input-group-btn">
+                    <a class="btn btn-link" type="submit">Go</a>
+                  </span>
                 </div>
-              </form>
+              </div>
             </div>
-            <div class="col-md-12" id="editor" style="height:72%"><%%- -%><%= yield -%></div>
+            <div class="col-md-12" id="editor" style="height:73%"><%%- -%>
+							<%= yield -%>
+            </div>
           </div>
           <div class="col-md-2">
             <div class="row">
-              <div class="col-md-12 text-center">
-                <div class="btn-group btn-group-sm">
+              <div class="col-md-12 text-center form-group">
+                <div class="btn-group">
                   <a class="btn btn-link dropdown-toggle" data-toggle="dropdown">Footnote&nbsp;<span class="fa fa-caret-down"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li>
@@ -100,22 +107,14 @@
                 </div>
               </div>
             </div>
-            <div>右パネル</div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <form class="form-horizontal" role="form">
-              <div class="form-group">
-                <div class="col-sm-12">
-                  <input class="form-control" id="inputEmail3" placeholder="command" style="height:16pt" type="text">
-                </div>
-              </div>
-            </form>
+            <div>
+							右パネル
+						</div>
           </div>
         </div>
       </div>
     </div>
+
     <script>
       function ttclose(e){   window.close(); }
       function tthome(e){    location.href = '<%%= req.url_to(:show, '0000-00-00-000000') -%>'; }
@@ -126,8 +125,9 @@
       function ttsearch(e){  alert('constructing:' . e); }
       function ttlist(e){    location.href = '<%%= req.url_to(:index) -%>'; }
     </script>
-    <script src="../lib/ace/ace.js"></script>
-    <script src="../lib/ace/ext-linking.js"></script>
+
+    <script src="../ace/ace.js"></script>
+    <script src="../ace/ext-linking.js"></script>
     <script>
       function url_to( where, id ){ 
       switch( where ){
@@ -149,9 +149,9 @@
       
       var editor = ace.edit("editor");
       editor.$blockScrolling = Infinity;
-      editor.setTheme("ace/theme/idle_fingers"); // pathではない
-      editor.getSession().setMode("ace/mode/thinktank"); // pathではない
-      editor.setKeyboardHandler("ace/keyboard/emacs"); // pathではない
+      editor.setTheme("../ace/theme/idle_fingers");
+      editor.getSession().setMode("../ace/mode/thinktank");
+      editor.setKeyboardHandler("../ace/keyboard/emacs");
       
       editor.setFontSize(11);
       editor.getSession().setUseWrapMode(true);

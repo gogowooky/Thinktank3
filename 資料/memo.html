@@ -1,0 +1,171 @@
+<html><head>
+    <title>Thinktank</title>
+    <meta name="generator" content="thinktank">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet">
+    <link href="thinktank.css" rel="stylesheet" type="text/css">
+    <script>
+      function ttclose(e){   window.close(); }
+                              function tthome(e){    location.href = '<%%= req.url_to(:show, '0000-00-00-000000') -%>'; }
+                              function tttglmode(e){ location.href = '<%%= req.url_to(:toggle) -%>'; }
+                              function ttcreate(e){  $.ajax({ url: '<%%= req.url_to(:create) -%>', type: 'POST', success: function(dat){ location.href = url_to( 'edit', dat ); } }); }
+                              function ttupdate(e){  $.ajax({ url: '<%%= req.url_to(:update) -%>', type: 'PUT',  data: { content: editor.getValue() }, success: function(e){ location.reload() } }); }
+                              function ttdelete(e){  $.ajax({ url: '<%%= req.url_to(:delete) -%>', type: 'DELETE', success: function(e){ window.close() } }); }
+                              function ttsearch(e){  alert('constructing:' . e); }
+                              function ttlist(e){    location.href = '<%%= req.url_to(:index) -%>'; }
+    </script>
+  </head><body data-spy="scroll">
+    <script src="../ace/ace.js"></script>
+    <script src="../ace/ext-linking.js"></script>
+    <script>
+      function url_to( where, id ){ 
+                                		  switch( where ){
+                                		    case 'show': return '<%%= req.url_to(:memos) -%>' + '/' + id + '.html';
+                                		    case 'edit': return '<%%= req.url_to(:memos) -%>' + '/' + id + '/edit.html';
+                                	 	  }
+                                		}
+                                
+                                		function click(data){
+                                		  txt = data.token.value
+                                		  if( /^http/.test( txt ) ) {
+                                		    window.open( txt, "_blank" );
+                                		  } else {
+                                		    window.open( url_to( 'edit', txt.substr(0,17) ), "_blank" );
+                                		  }
+                                		} 
+                                		
+                                		// history.pushState(curid, null, howm());
+                                		
+                                		var editor = ace.edit("editor");
+                                		editor.$blockScrolling = Infinity;
+                                		editor.setTheme("../ace/theme/idle_fingers");
+                                		editor.getSession().setMode("../ace/mode/thinktank");
+                                		editor.setKeyboardHandler("../ace/keyboard/emacs");
+                                		
+                                		editor.setFontSize(10);
+                                		editor.getSession().setUseWrapMode(true);
+                                		editor.getSession().setTabSize(2);
+                                		editor.renderer.setShowGutter(false);
+                                		
+                                		editor.setOptions( { enableLinking: true } );
+                                		editor.on( "linkClick", click );
+                                		
+                                		$('#inpt').keydown( function(e){ if( e.which == 13 ){ ttsearch(e); $("#editor").focus(); return false; } });
+                                		editor.commands.addCommand({ bindKey: { mac: 'ctrl-/' }, exec: function(e){ alert("hit"); } });
+                                		// editor.commands.addCommand({ bindKey: { win: 'Ctrl-E', mac: 'Ctrl-E' }, exec: function(e){ $("#inpt").focus(); } });
+                                		// editor.commands.addCommand({ bindKey: { win: 'Ctrl-S', mac: 'Ctrl-S' }, exec: function(e){ ttupdate(e); } });
+                                		// editor.commands.addCommand({ bindKey: { win: 'Ctrl-M', mac: 'Ctrl-M' }, exec: function(e){ ttcreate(e); } });
+                                		// editor.commands.addCommand({ bindKey: { win: 'Ctrl-Q', mac: 'Ctrl-Q' }, exec: function(e){ ttclose(e); } });
+    </script>
+    <div class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand"><span>Thinktank</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+          <ul class="nav navbar-left navbar-nav">
+            <li class="active">
+              <a href="#">MEMO</a>
+            </li>
+            <li>
+              <a href="#">PHOTO</a>
+            </li>
+            <li>
+              <a href="#">CALENDAR</a>
+            </li>
+            <li>
+              <a href="#">EDIT</a>
+            </li>
+            <li>
+              <a href="#">CONFIG</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="row">
+              <div class="col-md-12 text-center form-group">
+                <div class="btn-group">
+                  <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Collection &nbsp;<span class="fa fa-caret-down"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li>
+                      <a href="#dd">All</a>
+                    </li>
+                    <li>
+                      <a href="#">Recent</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisici elit,
+              <br>sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
+              <br>Ut enim ad minim veniam, quis nostrud</p>
+          </div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-6 text-left">
+                <div class="btn-group">
+                  <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> Dropdown <span class="fa fa-caret-down"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li>
+                      <a href="#">Action</a>
+                    </li>
+                  </ul>
+                </div>
+                <a class="btn btn-primary">Click me</a>
+                <a class="btn btn-primary">Click me</a>
+              </div>
+              <div class="col-md-6 form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="command">
+                  <span class="input-group-btn">
+                    <a class="btn btn-primary" type="submit">Go</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" id="editor">
+              <p>エディター</p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="row">
+              <div class="col-md-12 text-center form-group">
+                <div class="btn-group">
+                  <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Footnote&nbsp;<span class="fa fa-caret-down"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li>
+                      <a href="#">Action</a>
+                    </li>
+                    <li>
+                      <a href="#">Action</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisici elit,
+              <br>sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
+              <br>Ut enim ad minim veniam, quis nostrud</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+</body></html>

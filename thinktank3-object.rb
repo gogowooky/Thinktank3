@@ -5,6 +5,8 @@
 require 'forwardable'
 require 'socket'
 require 'fileutils'
+require 'net/http'
+require 'uri'
 
 # 開発メモ
 # ruby verは >2.1 必須。　デフォルト値のないキーワード引数の利用
@@ -20,18 +22,50 @@ end
 
 
 class ThinktankRoot < ThinktankObject
-  attr_reader :memodir   # メモ保存用フォルダ
-  attr_reader :configs   # 設定用メモ
-  attr_reader :memos     # メモ
+  extend Forwardable
+  def_delegator :@memos, :type,  :type
+  def_delegator :@memos, :page,  :page
+  def_delegator :@memos, :limit, :limit
+  def_delegator :@memos, :sort,  :sort
+  def_delegator :@memos, :dir,   :dir
+  def_delegator :@memos, :keyword, :keyword
+  def_delegator :@memos, :hits,  :hits
+  def_delegator :@memos, :pages, :pages
 
-  def initialize()
-    @setup = ThinktankMemo.new( filepath: File.expand_path( File.dirname( __FILE__ ) ) + '/thinktank.howm', parent: self, root: self )
-    @memodir = @setup.property( address: "config:memodir" )
+  attr_reader :memodir   # メモ保存用フォルダ
+  attr_reader :setup     # memodir設定用メモ(thinktank.howm)を読み込む
+  attr_reader :configs   # 設定用メモ
+  attr_reader :memos     # メモ本体
+  attr_reader :rootdir   # このファイルのフォルダ  
+
+
+
+  def initialize( devmode: nil )
+    @rootdir = File.expand_path( File.dirname( __FILE__ ) ) + '/'
+    @memodir = "#{@rootdir}tt/"
+    
+    tt_log "THINKTANKROOT>> temp memodir  | #{@memodir}"
+    @setup = ThinktankMemo.new( filepath: "#{@rootdir}thinktank.howm", parent: self, root: self ) unless devmode
+    @memodir = ( @setup.property( address: "config:memodir" ) rescue nil ) || @memodir
+    tt_log "THINKTANKROOT>> real memodir  | #{@memodir}"
   end
-  def load_config() @configs = ThinktankMemos.new( loadfile: "#{@memodir}????-??-??-??????/0000-00-00-00000?.howm", root: self )  end
-  def load_memo()   @memos   = ThinktankMemos.new( loadfile: "#{@memodir}**/????-??-??-??????/????-??-??-??????.howm", root: self )  end
-  def memodir( memoid: nil ) memoid[0,4] == "0000" ? "#{@memodir}#{memoid}" : "#{@memodir}#{memoid[0,4]}/#{memoid[5,2]}/#{memoid}" rescue @memodir end
+
+  def load_config()
+    @configs = ThinktankMemos.new( loadfile: "#{@memodir}????-??-??-??????/0000-00-00-00000?.howm", root: self )  
+    tt_log "THINKTANKROOT>> # of sysmemos | #{@configs.size}"
+  end
+
+  def load_memo()
+    @memos   = ThinktankMemos.new( loadfile: "#{@memodir}**/????-??-??-??????/????-??-??-??????.howm", root: self )  
+    tt_log "THINKTANKROOT>> # of memos    | #{@memos.size}"
+  end
+
+  def memodir( memoid: nil )
+    memoid[0,4] == "0000" ? "#{@memodir}#{memoid}" : "#{@memodir}#{memoid[0,4]}/#{memoid[5,2]}/#{memoid}" rescue @memodir 
+  end
+
 end
+
 
 
 class ThinktankMemos < ThinktankObject
@@ -39,7 +73,17 @@ class ThinktankMemos < ThinktankObject
   def_delegator :@memo, :[], :[]
   def_delegator :@memo, :size, :size
   def_delegator :@memo, :values, :values
-  
+
+  attr_accessor :type  # 結果タイプ
+  attr_accessor :page  # 結果一覧ページ
+  attr_accessor :limit # 結果表示数
+  attr_accessor :sort  # 結果ソートキー
+  attr_accessor :dir   # 結果ソート順
+  attr_accessor :keyword # 検索文字列
+  attr_accessor :hits  # 検索ヒット数
+  attr_accessor :pages # 結果総ページ数
+
+
   def initialize ( loadfile: , root: )
     @root = root
     @memo = {}
@@ -59,12 +103,12 @@ class ThinktankMemos < ThinktankObject
     newpath = "#{newdir}/#{newid}.howm"
     FileUtils.makedirs( newdir )
     File.open( newpath, "w" ){|f| f.write( "* NEW MEMO\n" ) }
-    puts "CREATE>> memoid : #{newid}"
+    tt_log "CREATE>> memoid | #{newid}"
     @memo[ newid ] = ThinktankMemo.new( filepath: newpath, parent: self, root: root )
   end
 
-  def update ( memoid: nil , options: {} )
-    puts "UPDATE>> memoid : #{memoid}"
+  def update ( memoid: nil, body: nil, options: {} )
+    tt_log "UPDATE>> memoid    | #{memoid}"
 
     updid    = Time.now.strftime( '%Y-%m-%d' )
     upddir   = @root.memodir( memoid: memoid )
@@ -72,7 +116,8 @@ class ThinktankMemos < ThinktankObject
     diffpath = "#{upddir}/#{memoid}_#{updid}.diff"
     memopath = "#{upddir}/#{memoid}.howm"
     
-    newlines = options['content'].lines
+    # newlines = options['content'].lines
+    newlines = body.chop.lines   # chop because url.el adds CRLF to bodyend
     File.delete( snappath ) if File.exists?( snappath )
     File.rename( memopath, snappath ) 
     File.open( memopath, 'wb' ){|f| newlines.each{|line| f.puts line } }
@@ -88,15 +133,19 @@ class ThinktankMemos < ThinktankObject
       }
       @memo.delete( memoid )
       @memo[ memoid ] = ThinktankMemo.new( filepath: memopath, parent: self, root: root )
+
     else
       File.delete( snappath ) if File.exist?( snappath )
       File.delete( diffpath ) if File.exist?( diffpath )
     end
+
+    tt_log "UPDATE>> firstline | #{@memo[ memoid ].firstline}"
+
     @memo[ memoid ]
   end
 
   def delete ( memoid: nil, options: {} )
-    puts "DELETE>> memoid : #{memoid}"
+    tt_log "DELETE>> memoid : #{memoid}"
     deldir = @root.memodir( memoid: memoid )
     repdir = "#{deldir}_#{Time.now.strftime('deleted_%Y-%m-%d')}"
     File.rename( deldir, repdir )
@@ -104,38 +153,50 @@ class ThinktankMemos < ThinktankObject
   end
 
   def index ( memoid: nil, options: {} )
-    type  = [ 'all', 'recent', 'search', 'search-title' ].find{|x| options['type'] == x } || 'all'
-    page  = options['page'] || '1'
-    sort  = options['sort']    || @root.configs.property( address: "select.%s:sort"  % type ) || 'memoid' rescue 'memoid'
-    limit = options[ 'limit' ] || @root.configs.property( address: "select.%s:limit" % type ) || '50' rescue '50'
-    dir   = [ 'ascend', 'descend' ].find{|x| x == options['dir'] } || @root.configs.property( address: "select.%s:dir" % type ) || 'ascend' rescue 'ascend'
-    keyword = options[ 'keyword' ]
     
-    puts "INDEX>> keyword   : #{keyword}"
-    memos = ( keyword ? @memo.select{|id,memo| memo.content.index( keyword ) } : @memo ).values
-    puts "INDEX>> sort      : #{sort}"
-    memos = ( memos.sort{|a,b| eval( "b.#{sort}" ) <=> eval( "a.#{sort}" ) } if sort ) rescue memos
-    puts "INDEX>> dir       : #{dir}"
-    memos = memos.reverse if dir == 'descend'
-    puts "INDEX>> page      : #{page}"
-    puts "INDEX>> limit     : #{limit}"
-    page = page.to_i
-    limit = limit.to_i
-    limit == 0 ? memos : memos[(page-1)*limit..page*limit-1]
+    @type    = [ 'all', 'recent', 'search', 'tsearch' ].find{|x| options['type'] == x } || 'all'
+    @page    = options['page'] || '1'
+    @sort    = options['sort']    || @root.configs.property( address: "config.index.#{@type}:sort"  ) || 'memoid' rescue 'memoid'
+    @limit   = options[ 'limit' ] || @root.configs.property( address: "config.index.#{@type}:limit" ) || '50' rescue '50'
+    @dir     = [ 'ascend', 'descend' ].find{|x| x == options['dir'] } || @root.configs.property( address: "select.%s:dir" % @type ) || 'ascend' rescue 'ascend'
+    @keyword = options[ 'keyword' ]
+
+    memos = ( keyword ? @memo.select{|id,memo| memo.content.index( @keyword ) } : @memo ).values
+    memos = ( memos.sort{|a,b| eval( "b.#{@sort}" ) <=> eval( "a.#{@sort}" ) } if @sort ) rescue memos
+    memos = memos.reverse if @dir == 'descend'
+    @page = @page.to_i
+    @limit = @limit.to_i
+    @hits  = memos.size
+    @pages = ( @hits.to_f / @limit ).ceil
+
+    tt_log "INDEX>> keyword   : #{@keyword}"
+    tt_log "INDEX>> sort      : #{@sort}"
+    tt_log "INDEX>> dir       : #{@dir}"
+    tt_log "INDEX>> page      : #{@page}"
+    tt_log "INDEX>> limit     : #{@limit}"
+    tt_log "INDEX>> hits      : #{@hits}"
+    tt_log "INDEX>> pages     : #{@pages}"
+
+    @limit == 0 ? memos : memos[(@page-1)*@limit..@page*@limit-1]
   end
 
   def show  ( memoid: nil, options: {} )
-    puts "SHOW>> memoid : #{memoid}"
+    tt_log "SHOW>> memoid : #{memoid}"
     @memo[memoid] rescue nil 
   end
 
   def edit  ( memoid: nil, options: {} )
-    puts "EDIT>> memoid : #{memoid}"
-    @memo[memoid] rescue nil
+    tt_log "EDIT>> options | #{options}"
+    if options.has_key?("memoid") then
+      [ show( memoid: options["memoid"] ) ] rescue nil
+    else
+      index( options: options ) rescue nil
+    end
+
   end
 
   def error ( memoid: nil, options: {} )
-    puts "ERROR>> memoid : #{memoid}"
+    tt_log "ERROR>> memoid : #{memoid}"
     'error'
   end
 end
@@ -151,7 +212,7 @@ class ThinktankSection < ThinktankObject
   def initialize ( text:, parent:, root: )
     @parent = parent
     @root   = root
-    @firstline = text.lines()[0].chomp
+    @firstline = text.lines[0].chomp rescue ''
     @star      = @firstline.match( /^(\*+).*$/ ) ? $1 : '*'
     @subsections = []
     @properties  = {}

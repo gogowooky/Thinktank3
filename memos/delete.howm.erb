@@ -1,1 +1,1 @@
-<%= @thinktank.memos.delete( memoid: req.memoid, options: req.query ) -%>
+<%= @thinktank.memos.delete( memoid: req.memoid, options: req.query ).memoid -%>

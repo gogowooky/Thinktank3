@@ -1,2 +1,145 @@
-<%- memo = @thinktank.memos.edit( memoid: req.memoid, options: req.query ) -%>
-<%= memo.content -%>
+<html style="height:100%"><head>
+    <title>Thinktank</title>
+    <meta name="generator" content="thinktank">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="thinktank.css" type="text/css" rel="stylesheet" >
+  </head>
+	
+	<body data-spy="scroll"  style="height:100%">
+    <div class="navbar navbar-default navbar-static-bottom">
+      <div class="container">
+        <div class="navbar-header"><a class="navbar-brand">
+						<span>Thinktank</span></a>
+				</div>
+        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+          <ul class="nav navbar-left navbar-nav">
+            <li>  <a href="#">MEMO</a>      </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" > <!-- style="height:88%;"> -->
+      <div class="container">
+        <div class="col-md-12">
+					<div id="alertArea" class="alert alert-dismissable alert-success" style="display:none">
+						alert
+					</div>
+          <div class="row">
+            <div class="col-sm-9">
+              <input class="form-control" id="inputCommand" placeholder="command" style="height:20pt" type="text" onChange="ttcommand()">
+            </div>
+            <div class="col-md-3 text-right">
+    					<a class="btn btn-link btn-sm" onClick="ttupdate()">Save</a>
+              <a class="btn btn-link btn-sm" onClick="ttcreate()">New</a>
+              <a class="btn btn-link btn-sm" onClick="ttdelete()">Delete</a>
+            </div>
+          </div>
+					<div class="col-md-12" id="editor" style="height:100%;"><%= -%></div>
+        </div>
+      </div>
+    </div>
+		
+    <script src="../lib/ace/ace.js"></script>
+    <script src="../lib/ace/ext-linking.js"></script>
+    <script>
+      
+      var editor = ace.edit("editor");
+      editor.$blockScrolling = Infinity;
+      editor.setTheme("ace/theme/idle_fingers"); // pathではない
+      editor.getSession().setMode("ace/mode/thinktank"); // pathではない
+      editor.setKeyboardHandler("ace/keyboard/emacs"); // pathではない
+      editor.setFontSize(11);
+      editor.getSession().setUseWrapMode(true);
+      editor.getSession().setTabSize(2);
+      editor.renderer.setShowGutter(false);
+
+      //
+			// Link Click ... OK
+      //
+			//editor.setOptions( { enableLinking: true } );
+			//editor.on( 'linkClick', linkclick );
+      //function linkclick(e){ jump( e.token.value ); return false; }
+			
+			function jump( text ){
+			  ttmessage( text );
+      　if( /http/.test( text ) ) {
+      　　window.open( txt, "_blank" );
+      　} else if( /^[0-9][0-9][0-9][0-9]\-/.test( text ) ) {
+			　　window.open( '<%= req.url_to(:memos) -%>' + "/edit.html?memoid=" + text.substr(0,17), "_blank" );
+      　}
+			  return false;
+			}
+
+			//
+			// Click ... OK
+			//
+			editor.on( 'click', keyclick );
+			function keyclick(e){
+			　var position = editor.selection.getCursor();
+			  jump( editor.session.getTokenAt( position.row, position.column ).value ); 
+			  return false;
+			}
+
+			//
+			// Key Return
+			//
+      $('#editor').keydown( function(e){ 
+			  switch( e.which ){
+			    case 13: keyclick(e); break;
+			    default: // alert( e.which ); break;
+			  }
+			} );
+      
+			//
+			// Save 
+			//
+			editor.commands.addCommand( { bindKey: { win: 'Ctrl-Alt-s', mac: 'Ctrl-Cmd-s' }, exec: ttupdate } );
+      function ttupdate(e){ $.ajax({ url: '<%= req.url_to(:update) -%>', type: 'PUT', data: editor.getValue(), success: function(e){ ttmessage("save"); return false; location.reload(); } }); }
+
+			//
+			// Create
+			//
+			// editor.commands.addCommand( { bindKey: { win: 'Ctrl-Alt-n', mac: 'Ctrl-Cmd-n' }, exec: ttcreate } );
+      function ttcreate(e){ $.ajax({ url: '<%= req.url_to(:create) -%>', type: 'POST', success: function(dat){ window.open( '<%= req.url_to(:memos) -%>' + "/edit.html?memoid=" + dat, "_blank" );  }}); }
+
+			//
+			// Delete
+      //
+			function ttdelete(e){ $.ajax({ url: '<%= req.url_to(:delete) -%>', type: 'DELETE', success: function(e){ window.close(); } }); } 
+			
+			//
+			// List
+			//
+			editor.commands.addCommand( { bindKey: { win: 'Ctrl-Alt-q', mac: 'Ctrl-Cmd-q' }, exec: ttquery } );
+			function ttquery(e){ $.ajax({ url: '<%= req.url_to(:index) -%>', type: 'GET', success: function(e){ $("#inputCommand").focus(); } }); }
+			function ttcommand(e){ ttmessage("query");      return false;         }
+
+			//
+			// Message
+			//
+			function ttmessage(mes){ $("#alertArea").text(mes); $("#alertArea").fadeIn(500).delay(500).fadeOut(300); }
+					
+
+			//
+			// Insert Contents
+			//
+			$.ajax({ url: '<%= req.url_to_howm() -%>', type: 'GET',  success: initialize });
+			function initialize( dat ){
+			  $("title").text("<%= req.query['memoid'] -%>")
+			  editor.insert( dat ); 
+			  editor.gotoLine( 0, 0, true ); 
+			  editor.focus();
+			}
+
+			editor.focus();
+
+			
+    </script>
+  
+
+</body></html>

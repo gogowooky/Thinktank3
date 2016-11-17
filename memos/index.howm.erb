@@ -1,4 +1,5 @@
 <%- memos = @thinktank.memos.index( memoid: req.memoid, options: req.query ) -%>
+TYPE:<%= @thinktank.type %> KEY:<%= @thinktank.keyword %> HITS:<%= @thinktank.hits %> LIMIT:<%= @thinktank.limit %> PAGE:<%= @thinktank.page %>/<%= @thinktank.pages %> SORT:<%= @thinktank.sort %> DIR:<%= @thinktank.dir %>
 <%- memos.each{|memo| -%>
 <%= memo.memoid -%>.howm | <%= memo.firstline %>
 <%- }  -%>

@@ -1,9 +1,0 @@
-<h1>TOPIC -- <%= req.topic -%></h1>
-<%- if req.date then -%>
-<%-   nil -%>
-<%- else -%>
-<%-   @thinktank.memos.index( options: { 'keyword' => req.topic } ).each{|dialy| -%>
-  <a href='<%= req.url_to( :show, dialy.memoid ) -%>' target='_blank'> <%= dialy.memoid -%> .howm</a>
-  <%= dialy.firstline -%></BR>
-  <%- } -%>
-<%- end -%>

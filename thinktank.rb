@@ -13,25 +13,27 @@ load 'thinktank3-object.rb'
 #
 # 起動方法
 #
-# ruby thinktank.rb --memodir "D:/Dropbox/MyData/tt/" --test test
-# ruby thinktank.rb --memodir ~/Dropbox/MyData/tt
+# ruby thinktank.rb --test test
+# ruby thinktank.rb
 #
 
-
 # 初期値設定
-$memodir, $test = nil, "thinktank"
+$test = "run"
 
 
 # コマンドラインオプション読み込み
 eval( "$#{$1} = ARGV.shift" ) while ARGV.shift =~ /^\-\-(\w+)/
 
-puts "CMDLINE.OPT>> test     | #{$test}"
-puts "CMDLINE.ENV>> hostname | #{Socket.gethostname}"
+tt_log "CMDLINE.OPT>> test     | #{$test}"
+tt_log "CMDLINE.ENV>> hostname | #{Socket.gethostname}"
 
 case $test
 
 when "run"
-  app_startup()
+  app_startup( devmode: nil )
+
+when "dev"
+  app_startup( devmode: true )
 
 when "ttbm"
   Benchmark.bm 10 do |r|
