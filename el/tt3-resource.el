@@ -30,16 +30,17 @@
 																													 (url-hexify-string (cond ((symbolp key) (symbol-to-string key))
 																																										(t key)))
 																													 (url-hexify-string (cond ((stringp val) val)
+																																										((symbolp val) (symbol-to-string val))
 																																										((vectorp val) (json-encode val))
 																																										((listp val)   (json-encode val))
 																																										((numberp val) (number-to-string val))
-																																										((symbolp val) (symbol-name val))
 																																										(t val))))
 																					 ) "&" ))))
 
 
-(defun* tt3-resource-request-http ( &key (action :read) (host "0.0.0.0") (port "20091") (resource "memos") (ext "howm") (memoid "0000-00-00-000000") (query nil) (body "") ) "
+(defun* tt3-resource-request-http ( &key (test :no) (action :read) (host "0.0.0.0") (port "20091") (resource "memos") (ext "howm") (memoid nil) (query nil) (body "") ) "
 * [説明] thinktank serverにアクセスし、res.headerをalistで返す。　res.bodyはbufferに保存されている。
+  [注意] emacsからのアクセスは必ずlocal serverを介すため、引数のhost/portなどは主にメンテ目的である。
   [引数] action   :  :show, :create, :update, :destroy, :index
          memoid   :  \"xxxx-xx-xx-xxxxxx\"
          query    :  alist
@@ -60,12 +61,13 @@
 	;;  (\"Connection\" . \"Keep-Alive\"))                                                     ;
 	;; "
 				(cond ((string= ext "html")
-							 (browse-url (case action
-														 (:read   (concat "http://" host ":" port "/thinktank/" resource "/" memoid ".html"      (tt3-resource-alist2params query)))
-														 (:index  (concat "http://" host ":" port "/thinktank/" resource            ".html"      (tt3-resource-alist2params query)))
-														 (:edit   (concat "http://" host ":" port "/thinktank/" resource "/" memoid "/edit.html" (tt3-resource-alist2params query))))))
-
-							
+							 (let* ((url (case action
+														 (:read   (concat "http://" host ":" port "/thinktank/" resource "/edit.html"  (tt3-resource-alist2params (cons `(:memoid . ,memoid) query))))
+														 (:index  (concat "http://" host ":" port "/thinktank/" resource "/edit.html"  (tt3-resource-alist2params query))))))
+								 (case test
+									 (:url url)
+									 (t    (browse-url url)))))
+							 
 							((string= ext "howm")
 							 (let* ((response-buf "*http-res*")
 											url-request-data 
@@ -81,30 +83,33 @@
 											 (:destroy `("DELETE" . ,(concat "http://" host ":" port "/thinktank/" resource "/" memoid ".howm" (tt3-resource-alist2params query))))
 											 (:index   `("GET"    . ,(concat "http://" host ":" port "/thinktank/" resource            ".howm" (tt3-resource-alist2params query)))))
 									 
-									 ;; (setq url-request-data           (url-hexify-string (encode-coding-string (or body "") 'utf-8-unix)))
-									 (setq url-request-data           (encode-coding-string (or body "") 'utf-8-unix))
-									 (setq url-request-extra-headers `(("Content-Type"   . "text/howm")
-																										 ("Content-Length" . ,(format "%d" (+ 2 (length url-request-data)))))) ; url packageは最後に不必要な改行2文字を加えてしまう
-									 (save-excursion (condition-case nil
-																			 (let (heading-lines)
-																				 ;; serverと通信
-																				 (force-generate-new-buffer response-buf)
-																				 (insert (decode-coding-string (with-current-buffer (url-retrieve-synchronously url) (buffer-string)) 'utf-8-unix))
-																				 
-																				 ;; 最初の改行x2でheader/bodyに分割、headerをalist化して返す。　bodyはalistのbufferに残る。
-																				 (goto-char (point-min)) (re-search-forward "\n\n")
-																				 (setq heading-lines (split-string (buffer-substring (point) (point-min)) "\n"))
-																				 (delete-region (point) (point-min))
-																				 
-																				 ;; alist化
-																				 (cons (cons "Buffer" (current-buffer))                           ; ("Buffer" . "buffer-name")
-																							 (loop for lin in heading-lines
-																										 if (string-match "\\(: \\|HTTP\\)" lin)              
-																										 collect (let ((tmp (split-string lin "\\(: \\)")))
-																															 (case (length tmp)
-																																 (1 (cons "Status" (car tmp)))            ; ("Status" . "HTTP/1.1 200 OK" )
-																																 (2 (cons (car tmp) (cadr tmp))))))))     ; ("key" . "value" )
-																		 (error "error" '(("Status" . "error"))))))))))
+									 (case test
+										 (:url url)
+										 (t
+											;; (setq url-request-data           (url-hexify-string (encode-coding-string (or body "") 'utf-8-unix)))
+											(setq url-request-data           (encode-coding-string (or body "") 'utf-8-unix))
+											(setq url-request-extra-headers `(("Content-Type"   . "text/howm")
+																												("Content-Length" . ,(format "%d" (+ 2 (length url-request-data)))))) ; url packageは最後に不必要な改行2文字を加えてしまう
+											(save-excursion (condition-case nil
+																					(let (heading-lines)
+																						;; serverと通信
+																						(force-generate-new-buffer response-buf)
+																						(insert (decode-coding-string (with-current-buffer (url-retrieve-synchronously url) (buffer-string)) 'utf-8-unix))
+																						
+																						;; 最初の改行x2でheader/bodyに分割、headerをalist化して返す。　bodyはalistのbufferに残る。
+																						(goto-char (point-min)) (re-search-forward "\n\n")
+																						(setq heading-lines (split-string (buffer-substring (point) (point-min)) "\n"))
+																						(delete-region (point) (point-min))
+																						
+																						;; alist化
+																						(cons (cons "Buffer" (current-buffer))                           ; ("Buffer" . "buffer-name")
+																									(loop for lin in heading-lines
+																												if (string-match "\\(: \\|HTTP\\)" lin)              
+																												collect (let ((tmp (split-string lin "\\(: \\)")))
+																																	(case (length tmp)
+																																		(1 (cons "Status" (car tmp)))            ; ("Status" . "HTTP/1.1 200 OK" )
+																																		(2 (cons (car tmp) (cadr tmp))))))))     ; ("key" . "value" )
+																				(error "error" '(("Status" . "error"))))))))))))
 
 
 
@@ -117,7 +122,7 @@
 																				; ＨＴＴＰサーバー起動
 																				;
 
-(defun tt3-set-shell-cmdproxy()	(interactive)
+(defun tt3-set-shell-cmdproxy ()	(interactive)
 	(setq shell-file-name "cmdproxy" explicit-shell-file-name "cmdproxy")
 	(setenv "SHELL" explicit-shell-file-name)
 	(setq w32-quote-process-args t)
@@ -229,7 +234,10 @@
 ;; コマンド : tt:resource-browse-memo
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun* tt:resource-browse-memo ( &key memoid ) (interactive) (tt3-resource-request-http :memoid (if memoid memoid (file-name-base (buffer-name))) :ext "html"))
+(defun* tt:resource-browse-memo ( &key memoid type) (interactive)
+				(if type
+						(tt3-resource-request-http :query `((:type . ,type) (:action . :index)) :ext "html")
+					(tt3-resource-request-http :memoid (if memoid memoid (file-name-base (buffer-name))) :ext "html")))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -239,7 +247,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun* tt:resource-open-new-memo           () (interactive) (tt3-resource-read-memo :memoid (tt:resource-new-memo :memotag :new) :jump :end))
-(defun* tt:resource-link-new-memo      () (interactive) (insert (format "%s.howm" (tt:resource-new-memo :memotag :new))) (backward-char 22))
+(defun* tt:resource-link-new-memo           () (interactive) (insert (format "%s.howm" (tt:resource-new-memo :memotag :new))) (backward-char 22))
 (defun* tt:resource-link-new-clipboard-memo () (interactive) (insert (format "%s.howm" (tt:resource-new-memo :memotag :clipboard))) (backward-char 22))
 (defun* tt:resource-link-new-region-memo    () (interactive) (insert (format "%s.howm" (tt:resource-new-memo :memotag :move-region))) (backward-char 22))
 
@@ -359,6 +367,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun* tt:resource-index-all ()    (tt:resource-index :type :all))
+(defun* tt:resource-index-recent () (tt:resource-index :type :recent))
 (defun* tt:resource-index-search () (tt:resource-index :type :search :keyword (read-string "keyword: ")))
 
 
@@ -366,6 +375,7 @@
 	(interactive)
 	(case type
 		(:all    (tt3-resource-index :query `((:type . "all"))))
+		(:recent (tt3-resource-index :query `((:type . "recent"))))
 		(:search (tt3-resource-index :query `((:type . "search") (:keyword . ,keyword))))))
 																				;
 																				; url option化でnil→nullとなりThinktankMemos::index内でおかしくなる。避けるにはnil値を渡さないこと。160919

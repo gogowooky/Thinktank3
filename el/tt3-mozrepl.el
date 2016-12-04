@@ -21,7 +21,7 @@
 										(27  (throw 'exit-menu 2) "quit") ;: ESC
 										((16 up)     (tt3-mozrepl-request  "goDoCommand('cmd_scrollLineUp');") "up") ;; C-p
 										((14 down)   (tt3-mozrepl-request  "goDoCommand('cmd_scrollLineDown');") "down") ;; C-n
-										((2 left)    (tt3-mozrepl-request  "gBrowser.tabContainer.advanceSelectedTab(-1, true);") "left")  ;; C-b
+										((2 left)    (tt3-mozrepl-request  "gBrowser.tabContainer.advanceSelectedTab(-1, true);") "left")	;; C-b
 										((6 right)   (tt3-mozrepl-request  "gBrowser.tabContainer.advanceSelectedTab(1, true);")  "right") ;; C-f
 										
 										((8 127)     (tt3-mozrepl-request  "gBrowser.goBack();")    "back")      ;; C-h, BS

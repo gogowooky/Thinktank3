@@ -10,14 +10,45 @@
 
 (defun tt:misc-copy-memoid () (interactive) (push-string-to-clipboard (thinktank3-format :memofile (buffer-name))))
 (defun tt:misc-copy-memotitle () (interactive) (save-excursion (goto-char (point-min)) (push-string-to-clipboard (current-line-string))))
-(defun tt:misc-copy-memopath () (interactive) (push-string-to-clipboard (thinktank3-format :memopath (buffer-name))))
 
 (defun tt3-misc-howmidp ( str ) (and (string-match "\\([0-9][0-9][0-9][0-9]\\-[0-9][0-9]\\-[0-9][0-9]\\-[0-9][0-9][0-9][0-9][0-9][0-9]\\)\\.howm" str) (match-string 1 str)))
+
+(defun* tt:misc-clipboard-memoinfo ( &optional (info-type :id) ) (interactive)
+				(push-string-to-clipboard 
+				 (case info-type
+					 (:id      (thinktank3-format :memoid (buffer-name)))
+					 (:howm    (push-string-to-clipboard (thinktank3-format :memofile (buffer-name))))
+					 (:title   (push-string-to-clipboard (first-line-string)))                                                       ; serverから得るか？
+					 (:content (push-string-to-clipboard (buffer-string)))                                                           ; serverから得るか？
+					 (:url     (tt3-resource-request-http :test :url :ext "html" :memoid (thinktank3-format :memoid (buffer-name))))
+					 (:nodes ))))                                                                                                     ; serverから得るか？
 
 	
 ;;--------------------------------------------------------------------------------------------------------------------------------------------
 ;;
-;; emacs 系コマンド
+;; emacs編集系コマンド
+;;
+;;--------------------------------------------------------------------------------------------------------------------------------------------
+(defun tt3-misc-insert-timestamp ( timestamp-type insert-type )
+	(let ((ts (case timestamp-type
+							(:tt    (format-time-string "%Y-%m-%d-%H%M%S"))
+							(:now   (format-time-string "%Y-%m-%d %a %H:%M"))
+							(:today (format-time-string "%Y-%m-%d"))
+							(:kyou  (format "%s年%s月%s日" (format-time-string "%Y") (format-time-string "%m") (format-time-string "%d"))))))
+		(insert (case insert-type
+							(:text ts)
+							(:tag  (format "[%s]" ts))
+							(:node (format "\n* [%s]" ts))))))
+
+(defun* tt:misc-insert-today ( &optional (insert-type :today) ) (interactive) (tt3-misc-insert-timestamp :today insert-type))
+(defun* tt:misc-insert-kyou  ( &optional (insert-type :today) ) (interactive) (tt3-misc-insert-timestamp :kyou  insert-type))
+(defun* tt:misc-insert-now   ( &optional (insert-type :today) ) (interactive) (tt3-misc-insert-timestamp :now   insert-type))
+(defun* tt:misc-insert-tt    ( &optional (insert-type :today) ) (interactive) (tt3-misc-insert-timestamp :tt    insert-type))
+
+
+;;--------------------------------------------------------------------------------------------------------------------------------------------
+;;
+;; emacs制御系コマンド
 ;;
 ;;--------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -162,7 +162,11 @@ class ThinktankMemos < ThinktankObject
     @keyword = options[ 'keyword' ]
 
     memos = ( keyword ? @memo.select{|id,memo| memo.content.index( @keyword ) } : @memo ).values
-    memos = ( memos.sort{|a,b| eval( "b.#{@sort}" ) <=> eval( "a.#{@sort}" ) } if @sort ) rescue memos
+    memos = if @type == 'recent' then
+              memos.sort{|a,b| b.updateid <=> a.updateid } rescue memos
+            else
+              ( memos.sort{|a,b| eval( "b.#{@sort}" ) <=> eval( "a.#{@sort}" ) } if @sort ) rescue memos
+            end
     memos = memos.reverse if @dir == 'descend'
     @page = @page.to_i
     @limit = @limit.to_i
@@ -240,6 +244,7 @@ end
 class ThinktankMemo < ThinktankSection
   attr_reader :memoid    # メモID,  ex)0000-00-00-000000
   attr_reader :filepath  # ファイル
+  attr_reader :updateid  # アップデート時
 
   def initialize ( filepath:, parent:, root: )
     @parent = parent
@@ -249,6 +254,7 @@ class ThinktankMemo < ThinktankSection
     @star     = ''
     @subsections = []
     @properties = {}
+    @updateid = File.mtime( @filepath ).strftime( "%Y-%m-%d-%H%M%S" )
 
     # section分解 (top level)
     break_point = /^\*[ 　\t]+/

@@ -23,6 +23,8 @@
 (defun string-to-integer ( text )       "* [説明] 文字列が整数のときのみ数値化する。 "  '((string-to-integer nil))
 	(if (string-match "^[0-9]+$" text) (string-to-number text) text))
 
+
+
 ;;
 ;; リスト
 ;;
@@ -35,6 +37,10 @@
 ;;
 ;; editor
 ;;
+(defun first-line-string ()           "* [説明] バッファー第一行目の文字列を得る"
+	(buffer-substring-no-properties (point-min) (save-excursion (progn (goto-line 1) (end-of-line) (point)))))
+
+
 (defun current-line-string ()           "* [説明] カーソル行の文字列を得る"
 	(buffer-substring-no-properties (line-beginning-position) (line-end-position)))
 

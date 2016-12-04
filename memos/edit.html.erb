@@ -126,11 +126,11 @@
 					
 
 			//
-			// Insert Contents
+			// Initialize
 			//
 			$.ajax({ url: '<%= req.url_to_howm() -%>', type: 'GET',  success: initialize });
 			function initialize( dat ){
-			  $("title").text("<%= req.query['memoid'] -%>")
+			  $("title").text("<%= req.query['memoid'] == 'nil' ? 'List:'+req.query['type'] : req.query['memoid'] -%>")
 			  editor.insert( dat ); 
 			  editor.gotoLine( 0, 0, true ); 
 			  editor.focus();

@@ -1,6 +1,5 @@
 ;;  tt-menu.l; -*- mode: emacs-lisp; coding: utf-8 -*-
 (require 'cl)
-
 (require 'helm-config)
 (require 'helm)
 
@@ -26,16 +25,16 @@
 
 ;;--------------------------------------------------------------------------------------------------------------------------------------------
 ;;
-;; [1/6] 各種メニュー表示コマンド
+;; [1/5] 各種メニュー表示コマンド
 ;;
 ;;--------------------------------------------------------------------------------------------------------------------------------------------
-(defun tt:menu-show-tree-menu ( &optional arg )  (interactive "P") (with-tt3-menu-context arg (tt3-menu-show-stringlist-menu tt3-menu-string-list :tree)))
-(defun tt:menu-show-list-menu ( &optional arg )  (interactive "P") (with-tt3-menu-context arg (tt3-menu-show-stringlist-menu tt3-menu-string-list :list)))
-(defun tt:menu-show-popup-menu ( &optional arg ) (interactive "P") (with-tt3-menu-context arg (tt3-menu-show-stringlist-menu tt3-menu-string-list :popup))) '((tt:menu-show-popup-menu))
+(defun tt:menu-show-tree-menu ( &optional ctrl-u-state )  (interactive "P") (with-tt3-menu-context ctrl-u-state (tt3-menu-show-stringlist-menu tt3-menu-string-list :tree)))
+(defun tt:menu-show-list-menu ( &optional ctrl-u-state )  (interactive "P") (with-tt3-menu-context ctrl-u-state (tt3-menu-show-stringlist-menu tt3-menu-string-list :list)))
+(defun tt:menu-show-popup-menu ( &optional ctrl-u-state ) (interactive "P") (with-tt3-menu-context ctrl-u-state (tt3-menu-show-stringlist-menu tt3-menu-string-list :popup))) '((tt:menu-show-popup-menu))
 
 ;;--------------------------------------------------------------------------------------------------------------------------------------------
 ;;
-;; [2/6] メニュー初期化関連の変数・コマンド・関数
+;; [2/5] メニュー初期化関連の変数・コマンド・関数
 ;;
 ;;--------------------------------------------------------------------------------------------------------------------------------------------
 (defvar tt3-menu-default-string-list 
@@ -51,7 +50,7 @@
 
 (defun tt:menu-initialize () (interactive) "   (tt:menu-initialize)
 * [説明] 各所で設定されているメニュー設定値を収集し、thinktank menuを再構成する
-  [注意] 
+  [概要] 
 	 (thinktank3-menu-add [メニュー] )                              ; メニューを設定する
 	 (add-hook 'thinktank3-menu-before-initialize-hook [初期化] )   ; 追加の初期化指定(optional)
 	 (tt:menu-initialize)                                           ; 初期化
@@ -72,7 +71,7 @@
 
 ;;--------------------------------------------------------------------------------------------------------------------------------------------
 ;;
-;; [4/6] helm補助用のコマンド・変数・関数
+;; [3/5] helm補助用のコマンド・変数・関数
 ;;
 ;;--------------------------------------------------------------------------------------------------------------------------------------------
 (defun tt:menu-select-one-automatically () (interactive) "
@@ -94,7 +93,7 @@
 
 ;;--------------------------------------------------------------------------------------------------------------------------------------------
 ;;
-;; [5/6] コンテキスト記録
+;; [4/5] コンテキスト記録
 ;;
 ;;--------------------------------------------------------------------------------------------------------------------------------------------
 (defvar tt3-menu-arg '())     ; C-uの状態を保持
@@ -109,12 +108,20 @@
 (defun tt3-tt3-menu-context-buffer () (car (assoc-default "buf" tt3-menu-context)))
 (defun tt3-tt3-menu-context-calendar () (car (assoc-default "cal" tt3-menu-context)))
 
-(defmacro with-tt3-menu-context ( C-u-arg &rest body ) "
-	(defun xxxx ( &optional arg ) (interactive \"P\") (with-tt3-menu-context arg (処理)) )
-   で xxxx 呼び出し時の C-u 状態が記録される。 (処理)内で上記context関数が使える。
+(defmacro with-tt3-menu-context ( ctrl-u-state &rest body ) "
+  (with-tt3-menu-context [ctrl-u状態]
+    [body]
+  )
+  で、[body] 内部でいくつかの呼出時状態関数を用いることができるようになる。
+　thinktankのmenu呼び出しは以下の形式で実行しており、menu表示前のCtrl-u状態も把握できる。
+
+　(defun tt:menu-show-tree-menu ( &optional ctrl-u-state )
+　　(interactive \"P\")
+　　(with-tt3-menu-context ctrl-u-state (tt3-menu-show-stringlist-menu tt3-menu-string-list :tree)))
+
 "
-	`(let ((arg1 (condition-case nil (car ,C-u-arg) (error 0))))
-		 ;(msgbox "copn:%s" ,C-u-arg)
+	`(let ((arg1 (condition-case nil (car ,ctrl-u-state) (error 0))))
+		 ;(msgbox "copn:%s" ,ctrl-u-state)
 		 (progn (setq tt3-menu-arg arg1)
 						(setq tt3-menu-context `(("pre" ,(number-to-string (or arg1 0)))
 																		 ("ext" ,(file-name-extension (buffer-name)))
@@ -184,7 +191,7 @@
 
 ;;--------------------------------------------------------------------------------------------------------------------------------------------
 ;;
-;; [6/6] メニュー表示関数群
+;; [5/5] メニュー表示関数群
 ;;
 ;;--------------------------------------------------------------------------------------------------------------------------------------------
 
